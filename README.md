@@ -1,4 +1,4 @@
-# StereoFuse-VIO
+# depth_vio — StereoFuse-VIO
 
 Offline stereo-depth + visual-inertial mapping experiments on EuRoC MAV.
 The project combines pretrained IGEV++, OpenVINS v2.7 and two mapping backends:

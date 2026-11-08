@@ -1,0 +1,196 @@
+<title>{{TITLE}}</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: lab-notebook report — sticky stage rail on the left, one column of stages; figures full width, three short notes beneath each. */
+:root {
+  --bg: #f4f6f7; --surface: #ffffff; --ink: #18222b; --muted: #55636f; --line: #d5dde2;
+  --accent: #0e6e86; --accent-soft: #dcecf1;
+  --c-model: #6a3fb5; --c-vio: #1f62c4; --c-geo: #4b5a66; --c-base: #8a6a12; --c-ref: #1d7a45; --c-diag: #b8352a; --c-reimpl: #8a4f9e; --c-input: #3a4752;
+  --ok: #1d7a45; --warn: #9a6400;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1519; --surface: #161e24; --ink: #e3e9ed; --muted: #97a6b1; --line: #2a363f;
+  --accent: #4fb8d2; --accent-soft: #15323b;
+  --c-model: #b59af0; --c-vio: #7fb0f5; --c-geo: #a4b3be; --c-base: #e0bd5c; --c-ref: #6fcf97; --c-diag: #f08b80; --c-reimpl: #d39ae6; --c-input: #b8c5ce;
+  --ok: #6fcf97; --warn: #e0b04d; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1519; --surface: #161e24; --ink: #e3e9ed; --muted: #97a6b1; --line: #2a363f;
+  --accent: #4fb8d2; --accent-soft: #15323b;
+  --c-model: #b59af0; --c-vio: #7fb0f5; --c-geo: #a4b3be; --c-base: #e0bd5c; --c-ref: #6fcf97; --c-diag: #f08b80; --c-reimpl: #d39ae6; --c-input: #b8c5ce;
+  --ok: #6fcf97; --warn: #e0b04d; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--f-body); margin: 0 }
+.wrap { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 40px; max-width: 1240px; margin: 0 auto;
+  padding-block: 40px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+nav { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; display: flex; flex-direction: column; gap: 2px }
+nav .navtitle { font: 600 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px }
+nav a { display: flex; gap: 10px; align-items: baseline; color: var(--muted); text-decoration: none; padding: 5px 8px; border-radius: 4px; font-size: 14px }
+nav a span { font: 500 12px var(--f-mono); color: var(--accent); width: 14px }
+nav a:hover, nav a:focus-visible { background: var(--accent-soft); color: var(--ink); outline: none }
+main { min-width: 0 }
+h1 { font: 700 clamp(30px, 4.4vw, 46px)/1.05 var(--f-display); letter-spacing: -.01em; margin: 0 0 10px; text-wrap: balance }
+.sub { color: var(--muted); max-width: 70ch; margin: 0 0 6px }
+.meta { font: 13px var(--f-mono); color: var(--muted); margin-bottom: 28px }
+.summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 8px 0 22px }
+.kpi { background: var(--surface); padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 4px }
+.kpi .k { font: 600 28px/1 var(--f-display); color: var(--accent); font-variant-numeric: tabular-nums }
+.kpi .l { font-size: 13px; color: var(--muted); line-height: 1.35 }
+.legend p { margin: 0 0 6px; font-size: 13px; color: var(--muted) }
+.callout { border-left: 3px solid var(--warn); background: var(--surface); padding: 12px 16px; margin: 18px 0 8px; font-size: 14px; max-width: 80ch }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px }
+.chip { font: 12px/1 var(--f-mono); padding: 5px 8px; border-radius: 3px; border: 1px solid currentColor; background: var(--surface) }
+.chip b { font-weight: 500 }
+.chip-model { color: var(--c-model) } .chip-vio { color: var(--c-vio) } .chip-geo { color: var(--c-geo) } .chip-base { color: var(--c-base) }
+.chip-ref { color: var(--c-ref) } .chip-diag { color: var(--c-diag) } .chip-reimpl { color: var(--c-reimpl) } .chip-input { color: var(--c-input) }
+.stage { border-top: 1px solid var(--line); padding-top: 34px; margin-top: 44px; scroll-margin-top: 16px }
+.stage-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px }
+.stage-no { font: 500 13px var(--f-mono); color: var(--accent); letter-spacing: .06em; text-transform: uppercase; width: 100% }
+h2 { font: 600 28px/1.15 var(--f-display); margin: 0; text-wrap: balance }
+.status { font: 500 12px var(--f-mono); padding: 3px 8px; border-radius: 999px; border: 1px solid currentColor }
+.status-ok { color: var(--ok) } .status-warn { color: var(--warn) }
+.role { color: var(--muted); margin: 6px 0 18px; max-width: 75ch }
+figure { margin: 0 0 22px }
+figure img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--line) }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; max-width: 90ch }
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; margin-top: 6px }
+.col { min-width: 0 }
+.col h3 { font: 600 13px var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--line) }
+.col h4 { font: 600 14px var(--f-body); margin: 14px 0 6px }
+.col p, .col ul { margin: 0 0 10px; font-size: 14px }
+.col ul { padding-left: 18px }
+.col li { margin-bottom: 4px }
+code { font: 12.5px var(--f-mono); background: var(--accent-soft); padding: 1px 4px; border-radius: 3px; overflow-wrap: anywhere }
+.concl { background: var(--surface); border: 1px solid var(--line); padding: 10px 14px; margin: 14px 0 0; font-size: 14px }
+.tbl { overflow-x: auto; margin: 6px 0 12px }
+table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); white-space: nowrap }
+th { font: 500 12px var(--f-mono); color: var(--muted) }
+td:first-child { white-space: normal }
+.probe { background: var(--surface); border: 1px solid var(--line); padding: 14px; margin: 0 0 22px }
+.probe-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 18px; align-items: start }
+.probe-canvas { min-width: 0 }
+.probe canvas { width: 100%; height: auto; display: block; cursor: crosshair; touch-action: none; image-rendering: pixelated }
+.probe-toggle { display: flex; gap: 16px; font-size: 13px; margin-top: 8px; color: var(--muted) }
+.probe-toggle label { display: flex; gap: 6px; align-items: center; cursor: pointer }
+.probe-read dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 12px 0 0; font-size: 13px }
+.probe-read dt { color: var(--muted) }
+.probe-read dd { margin: 0; font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right }
+.cbar { display: flex; align-items: center; gap: 8px; font: 12px var(--f-mono); color: var(--muted) }
+.cbar i { flex: 1; height: 10px; background: linear-gradient(90deg, #7a0403, #e4460a, #fbb938, #a4fc3c, #28bceb, #4040a2, #30123b) }
+.viewer { position: relative; width: 100%; background: #0d1216; border: 1px solid var(--line); overflow: hidden; touch-action: none }
+.viewer canvas { display: block }
+.vhint { position: absolute; left: 10px; bottom: 8px; font: 11px var(--f-mono); color: #9fb0bb; pointer-events: none }
+.vfail { color: #c9d3da; padding: 20px; font-size: 13px }
+footer { margin-top: 60px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px }
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 10px; padding-block: 24px 60px }
+  nav { position: static; flex-direction: row; flex-wrap: wrap; gap: 4px }
+  nav .navtitle { width: 100%; margin-bottom: 2px }
+  .summary { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .cols, .probe-grid { grid-template-columns: minmax(0, 1fr) }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important } }
+</style>
+
+<div class="wrap">
+  <nav aria-label="Các stage"><div class="navtitle">Pipeline</div>{{NAV}}</nav>
+  <main>
+    <h1>EuRoC Depth–VIO Pipeline</h1>
+    <p class="sub">Kết quả thực tế của từng giai đoạn trên sequence <b>{{SEQ}}</b>: ảnh stereo gốc → rectification → IGEV++ → depth metric → point cloud → OpenVINS → fusion TSDF → đánh giá với Vicon và scan Leica.</p>
+    <div class="meta">EuRoC MAV · Vicon Room 1 · frame minh họa #{{FRAME}} · RTX 4060 Laptop · IGEV++ sceneflow.pth · OpenVINS v2.7</div>
+    {{INTRO}}
+    {{STAGES}}
+    <footer>Mọi số liệu trong trang được đọc từ các file đầu ra trong <code>outputs/{{SEQ}}/</code>; script trong <code>pipeline/</code>. Ảnh được nén JPEG để nhúng; file PNG, .npy và .ply gốc nằm trong thư mục đầu ra.</footer>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const DATA = {{PAYLOAD}};
+const dec = (s, T) => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new T(u.buffer); };
+
+/* ---------- depth probe ---------- */
+(function () {
+  const W = 752, H = 480, c = document.getElementById('pc'); if (!c) return;
+  const ctx = c.getContext('2d');
+  const disp = dec(DATA.probe.disp, Uint16Array), z = dec(DATA.probe.z, Uint16Array), zr = dec(DATA.probe.zr, Uint16Array), zc = dec(DATA.probe.zc, Uint16Array);
+  const imgs = { depth: new Image(), gray: new Image() };
+  imgs.depth.src = "{{DEPTH_PNG}}"; imgs.gray.src = "{{LEFT_JPG}}";
+  let view = 'depth', last = null;
+  const draw = () => { ctx.drawImage(imgs[view], 0, 0, W, H); if (last) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(last[0] + .5, last[1] + .5, 7, 0, 7); ctx.stroke(); ctx.strokeStyle = '#000'; ctx.beginPath(); ctx.arc(last[0] + .5, last[1] + .5, 9, 0, 7); ctx.stroke(); } };
+  imgs.depth.onload = draw; imgs.gray.onload = () => view === 'gray' && draw();
+  document.querySelectorAll('input[name=pv]').forEach(r => r.addEventListener('change', e => { view = e.target.value; draw(); }));
+  const set = (id, t) => document.getElementById(id).textContent = t;
+  const m = v => v ? (v / 1000).toFixed(3) + ' m' : 'không có';
+  function read(ev) {
+    const r = c.getBoundingClientRect(), p = ev.touches ? ev.touches[0] : ev;
+    const u = Math.min(W - 1, Math.max(0, Math.floor((p.clientX - r.left) / r.width * W))), v = Math.min(H - 1, Math.max(0, Math.floor((p.clientY - r.top) / r.height * H)));
+    const i = v * W + u; last = [u, v]; draw();
+    set('r-uv', `(${u}, ${v})`); set('r-d', (disp[i] / 100).toFixed(2) + ' px');
+    set('r-z', z[i] ? m(z[i]) : 'không hợp lệ (L-R / >10 m)');
+    set('r-zr', m(zr[i])); set('r-zc', m(zc[i]));
+    if (z[i]) { const Z = z[i] / 1000, fx = DATA.fx; set('r-xyz', `${((u - 364.44) * Z / fx).toFixed(2)}, ${((v - 256.95) * Z / fx).toFixed(2)}, ${Z.toFixed(2)}`); } else set('r-xyz', '–');
+    if (ev.cancelable && ev.touches) ev.preventDefault();
+  }
+  c.addEventListener('mousemove', read); c.addEventListener('click', read); c.addEventListener('touchstart', read, { passive: false }); c.addEventListener('touchmove', read, { passive: false });
+})();
+
+/* ---------- 3D viewers ---------- */
+function cloudGeom(P, toThree) {
+  const xyz = dec(P.xyz, Int16Array), g = dec(P.g, Uint8Array), n = P.n;
+  const pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) {
+    const p = toThree(xyz[3 * i] / 1000, xyz[3 * i + 1] / 1000, xyz[3 * i + 2] / 1000);
+    pos[3 * i] = p[0]; pos[3 * i + 1] = p[1]; pos[3 * i + 2] = p[2];
+    const s = 0.15 + 0.85 * g[i] / 255; col[3 * i] = col[3 * i + 1] = col[3 * i + 2] = s;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  return geo;
+}
+function makeViewer(id, setup) {
+  const el = document.getElementById(id); if (!el) return;
+  if (!window.THREE || !THREE.OrbitControls) { el.innerHTML = '<div class="vfail">Không tải được thư viện 3D. Mở file .ply trong outputs/ bằng Open3D hoặc MeshLab.</div>'; return; }
+  const r = new THREE.WebGLRenderer({ antialias: true }); r.setPixelRatio(Math.min(2, window.devicePixelRatio));
+  el.prepend(r.domElement);
+  const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0d1216);
+  const cam = new THREE.PerspectiveCamera(55, 1, 0.05, 200);
+  const ctl = new THREE.OrbitControls(cam, r.domElement); ctl.enableDamping = true;
+  setup(scene, cam, ctl);
+  const size = () => { const w = el.clientWidth, h = el.clientHeight; r.setSize(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+  new ResizeObserver(size).observe(el); size();
+  let vis = true; new IntersectionObserver(e => vis = e[0].isIntersecting).observe(el);
+  (function loop() { requestAnimationFrame(loop); if (!vis) return; ctl.update(); r.render(scene, cam); })();
+}
+// local cloud: camera frame (x right, y down, z fwd) → three (x, -y, -z)
+makeViewer('v-local', (scene, cam, ctl) => {
+  const geo = cloudGeom(DATA.loc, (x, y, z) => [x, -y, -z]);
+  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.012, vertexColors: true })));
+  const ax = new THREE.AxesHelper(0.5); scene.add(ax);
+  cam.position.set(0.3, 0.6, 1.2); ctl.target.set(0, -0.6, -3.0);
+});
+// global: world z-up → three y-up: (x, z, -y)
+makeViewer('v-global', (scene, cam, ctl) => {
+  const T = (x, y, z) => [x, z, -y];
+  scene.add(new THREE.Points(cloudGeom(DATA.glob, T), new THREE.PointsMaterial({ size: 0.022, vertexColors: true })));
+  const line = (arr, color, step) => { const pts = []; for (let i = 0; i < arr.length; i += 3 * step) pts.push(new THREE.Vector3(...T(arr[i], arr[i + 1], arr[i + 2]))); scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color }))); };
+  line(DATA.gt, 0x8b98a3, 1); line(DATA.traj, 0xff9a2e, 1);
+  const fr = [];
+  for (const m of DATA.cams) {
+    const o = [m[3], m[7], m[11]], s = 0.18;
+    const corner = (a, b) => [o[0] + s * (a * m[0] + b * m[1] + 1.2 * m[2]), o[1] + s * (a * m[4] + b * m[5] + 1.2 * m[6]), o[2] + s * (a * m[8] + b * m[9] + 1.2 * m[10])];
+    const cs = [corner(-.8, -.55), corner(.8, -.55), corner(.8, .55), corner(-.8, .55)];
+    for (let k = 0; k < 4; k++) { fr.push(T(...o), T(...cs[k]), T(...cs[k]), T(...cs[(k + 1) % 4])); }
+  }
+  const g = new THREE.BufferGeometry().setFromPoints(fr.map(p => new THREE.Vector3(...p)));
+  scene.add(new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: 0x3fc1e0 })));
+  scene.add(new THREE.GridHelper(10, 10, 0x2c3a44, 0x1d272e));
+  cam.position.set(5.5, 6.5, 7.5); ctl.target.set(0, 0.8, 0);
+});
+</script>

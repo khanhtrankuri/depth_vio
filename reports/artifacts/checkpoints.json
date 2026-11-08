@@ -1,0 +1,38 @@
+{
+  "torch": "2.13.0+cu130",
+  "cuda_available": true,
+  "checkpoints": {
+    "igev_plusplus": {
+      "path": "IGEV-plusplus\\pretrained_models\\igev_plusplus\\sceneflow.pth",
+      "bytes": 58525223,
+      "sha256": "550227fb7b73cbe038149ab2c86884866e68af51db7e438e2485da7da3cff433",
+      "tensor_entries": 737,
+      "parameter_and_buffer_elements": 14564855,
+      "tensors_finite": true,
+      "sample_keys": [
+        "module.cnet.norm1.weight",
+        "module.cnet.norm1.bias",
+        "module.cnet.norm1.running_mean",
+        "module.cnet.norm1.running_var",
+        "module.cnet.norm1.num_batches_tracked"
+      ],
+      "status": "readable finite tensor state_dict; strict architecture load and inference NOT EVALUATED"
+    },
+    "igev_rt": {
+      "path": "IGEV-plusplus\\pretrained_models\\igev_rt\\sceneflow.pth",
+      "bytes": 16954349,
+      "sha256": "7b7b6ac42d51dbc357a4f7fde3f9278c0da9d2128d1f09ce6c20fd3dcbaa9209",
+      "tensor_entries": 490,
+      "parameter_and_buffer_elements": 4194338,
+      "tensors_finite": true,
+      "sample_keys": [
+        "module.update_block.encoder.convc1.weight",
+        "module.update_block.encoder.convc1.bias",
+        "module.update_block.encoder.convc2.weight",
+        "module.update_block.encoder.convc2.bias",
+        "module.update_block.encoder.convd1.weight"
+      ],
+      "status": "readable finite tensor state_dict; strict architecture load and inference NOT EVALUATED"
+    }
+  }
+}

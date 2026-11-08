@@ -1,0 +1,77 @@
+{
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "torch": "2.13.0+cu130",
+  "sequence": "V1_01_easy",
+  "warmup": 5,
+  "repeats": 30,
+  "sample_frame_indices": [
+    0,
+    29,
+    58,
+    88,
+    117,
+    147,
+    176,
+    205,
+    235,
+    264,
+    294,
+    323,
+    353,
+    382,
+    411,
+    441,
+    470,
+    500,
+    529,
+    559
+  ],
+  "scope": "integration including H2D copies; excludes I/O, stereo, confidence preparation, extraction",
+  "native_bounds": [
+    [
+      -6.75,
+      -6.81,
+      -1.41
+    ],
+    [
+      4.38,
+      3.54,
+      2.16
+    ]
+  ],
+  "backends": {
+    "legacy": {
+      "mean_ms": 32.88881000092564,
+      "p50_ms": 32.72459999425337,
+      "p90_ms": 34.23161996761337,
+      "dims": [
+        371,
+        345,
+        119
+      ],
+      "peak_cuda_allocated_bytes": 1184496128
+    },
+    "frustum_uniform": {
+      "mean_ms": 14.978996673986936,
+      "p50_ms": 15.440699993632734,
+      "p90_ms": 18.90759000671096,
+      "dims": [
+        371,
+        345,
+        119
+      ],
+      "peak_cuda_allocated_bytes": 411108864
+    },
+    "surfel_uniform": {
+      "mean_ms": 4.856176666604976,
+      "p50_ms": 4.709600005298853,
+      "p90_ms": 5.477479996625335,
+      "dims": [
+        371,
+        345,
+        119
+      ],
+      "peak_cuda_allocated_bytes": 384683008
+    }
+  }
+}

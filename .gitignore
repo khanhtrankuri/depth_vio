@@ -1,0 +1,40 @@
+# EuRoC datasets, pretrained weights, and generated reconstruction caches
+/data/
+/vicon_room1/
+/outputs/
+/report/
+**/pretrained_models/
+*.bag
+*.zip
+*.pth
+*.pt
+*.ply
+*.pcd
+*.npy
+*.npz
+
+# Keep compact evaluation metadata; do not commit trajectories, logs, or volumes.
+/reports/artifacts/**
+!/reports/artifacts/**/
+!/reports/artifacts/**/*.json
+!/reports/artifacts/fusion_v2/frozen_sources/*.py
+*.log
+
+# Local environments, caches, and editor/machine settings
+__pycache__/
+*.py[cod]
+.venv*/
+.python/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.idea/
+.vscode/
+.DS_Store
+._*
+.env
+.env.*
+!.env.example
+.aws/
+.codex/
+.agents/

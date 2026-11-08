@@ -1,0 +1,158 @@
+{
+  "V1_01_easy": {
+    "process": {
+      "sequence": "V1_01_easy",
+      "exit_code": 0,
+      "wall_s": 72.4872145,
+      "required_node_abort": true,
+      "library_unload_exception": true
+    },
+    "metrics": {
+      "n_matched": 2758,
+      "unique_gt": 2758,
+      "ATE_rmse_m": 0.06340124933764457,
+      "ATE_max_m": 0.1223490869680065,
+      "ATE_rotation_rmse_deg": 5.618476363237595,
+      "alignment": "SE3, all associated positions, scale fixed to 1",
+      "delta_from_saved_ATE_m": 1.5265566588595902e-16,
+      "association_max_ms": 5.037069320678711,
+      "first_estimate_delay_s": 4.558757066726685,
+      "estimate_max_gap_s": 0.10000991821289062,
+      "duration_s": 139.0012800693512,
+      "path_length_m": 58.44920749815151,
+      "timing_total_ms_mean": 13.507092939481268,
+      "timing_total_ms_p90": 19.23,
+      "covariance_blocks": {
+        "orientation": {
+          "min_eigenvalue": 1.346025011435509e-07,
+          "median_diagonal": [
+            0.00035542265,
+            5.6045e-07,
+            4.834465e-05
+          ]
+        },
+        "position": {
+          "min_eigenvalue": 0.002514484238796665,
+          "median_diagonal": [
+            0.00423747465,
+            0.002954749,
+            0.0025287734
+          ]
+        }
+      },
+      "raw_export_columns": 20,
+      "rpe": {
+        "1s": {
+          "n": 2716,
+          "trans_rmse_m": 0.044385913284976646,
+          "rot_rmse_deg": 0.46835481321017614
+        }
+      },
+      "endpoint_relative_translation_m": 0.12601146860894794
+    }
+  },
+  "V1_02_medium": {
+    "process": {
+      "sequence": "V1_02_medium",
+      "exit_code": 0,
+      "wall_s": 39.133704699999996,
+      "required_node_abort": true,
+      "library_unload_exception": true
+    },
+    "metrics": {
+      "n_matched": 1581,
+      "unique_gt": 1581,
+      "ATE_rmse_m": 0.057250622100156294,
+      "ATE_max_m": 0.15337933334281453,
+      "ATE_rotation_rmse_deg": 1.7230145977409006,
+      "alignment": "SE3, all associated positions, scale fixed to 1",
+      "delta_from_saved_ATE_m": 1.3877787807814457e-16,
+      "association_max_ms": 2.3870468139648438,
+      "first_estimate_delay_s": 3.9523868560791016,
+      "estimate_max_gap_s": 0.10000014305114746,
+      "duration_s": 79.55236005783081,
+      "path_length_m": 75.77798082396795,
+      "timing_total_ms_mean": 13.053743749999999,
+      "timing_total_ms_p90": 18.23,
+      "covariance_blocks": {
+        "orientation": {
+          "min_eigenvalue": 8.133490246711176e-08,
+          "median_diagonal": [
+            0.00036374305000000005,
+            1.17005e-06,
+            4.680245e-05
+          ]
+        },
+        "position": {
+          "min_eigenvalue": 0.002527968232255645,
+          "median_diagonal": [
+            0.00330345985,
+            0.0028782326,
+            0.0025676206
+          ]
+        }
+      },
+      "raw_export_columns": 20,
+      "rpe": {
+        "1s": {
+          "n": 1551,
+          "trans_rmse_m": 0.034654785439247535,
+          "rot_rmse_deg": 0.2688126786467784
+        }
+      },
+      "endpoint_relative_translation_m": 0.1793170105148764
+    }
+  },
+  "V1_03_difficult": {
+    "process": {
+      "sequence": "V1_03_difficult",
+      "exit_code": 0,
+      "wall_s": 49.6760185,
+      "required_node_abort": true,
+      "library_unload_exception": true
+    },
+    "metrics": {
+      "n_matched": 1972,
+      "unique_gt": 1972,
+      "ATE_rmse_m": 0.05945048763142246,
+      "ATE_max_m": 0.1460718775891364,
+      "ATE_rotation_rmse_deg": 2.6633921227026094,
+      "alignment": "SE3, all associated positions, scale fixed to 1",
+      "delta_from_saved_ATE_m": -2.7755575615628914e-17,
+      "association_max_ms": 2.402067184448242,
+      "first_estimate_delay_s": 5.410372018814087,
+      "estimate_max_gap_s": 0.15000009536743164,
+      "duration_s": 99.24451017379761,
+      "path_length_m": 78.862994218783,
+      "timing_total_ms_mean": 11.765904522613065,
+      "timing_total_ms_p90": 17.062,
+      "covariance_blocks": {
+        "orientation": {
+          "min_eigenvalue": 9.609184620509228e-08,
+          "median_diagonal": [
+            0.00037094765,
+            6.9035e-07,
+            4.6140499999999996e-05
+          ]
+        },
+        "position": {
+          "min_eigenvalue": 0.002519375118478349,
+          "median_diagonal": [
+            0.00346897935,
+            0.00279541585,
+            0.00257956975
+          ]
+        }
+      },
+      "raw_export_columns": 20,
+      "rpe": {
+        "1s": {
+          "n": 1939,
+          "trans_rmse_m": 0.03585829618694009,
+          "rot_rmse_deg": 0.24150603759062578
+        }
+      },
+      "endpoint_relative_translation_m": 0.03765762188610227
+    }
+  }
+}

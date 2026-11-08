@@ -1,0 +1,234 @@
+{
+  "sequence": "V1_02_medium",
+  "protocol": {
+    "reference": "original Leica scan",
+    "registration": "one existing SE3 trajectory alignment, evaluation only; no ICP",
+    "roi_lo": [
+      -4.8,
+      -4.8,
+      -0.6
+    ],
+    "roi_hi": [
+      4.8,
+      4.8,
+      3.6
+    ],
+    "voxel_m": 0.02,
+    "limitations": "point-to-point on sampled surfaces; fixed ROI not independent visibility-certified reference",
+    "audit": "no gtrotcorr; no reference enters inference/preparation/integration"
+  },
+  "results": {
+    "legacy_tsdf": {
+      "metrics": {
+        "n_prediction": 221965,
+        "n_reference": 511871,
+        "accuracy_mean_m": 0.055564148697571474,
+        "accuracy_rmse_m": 0.08312038639051374,
+        "accuracy_median_m": 0.034543125753680126,
+        "accuracy_p95_m": 0.1892190978766693,
+        "completeness_mean_m": 0.1262734629199494,
+        "chamfer_m": 0.09091880580876044,
+        "precision_2cm": 0.2436375104183092,
+        "recall_2cm": 0.18237212110082424,
+        "f1_2cm": 0.2085994600463187,
+        "precision_5cm": 0.6708670285855878,
+        "recall_5cm": 0.6134318998341379,
+        "f1_5cm": 0.6408651860945044,
+        "precision_10cm": 0.8656590002928389,
+        "recall_10cm": 0.8027471765347128,
+        "f1_10cm": 0.8330169571156709
+      },
+      "source_sha256": "42a26a6a534e746276433beaed84ba1c9875451e3e1b430f8b291e10c0154fcc"
+    },
+    "legacy_naive": {
+      "metrics": {
+        "n_prediction": 598070,
+        "n_reference": 511871,
+        "accuracy_mean_m": 0.048339234829379935,
+        "accuracy_rmse_m": 0.06582724370101996,
+        "accuracy_median_m": 0.03570489269909563,
+        "accuracy_p95_m": 0.12157217524704476,
+        "completeness_mean_m": 0.09885175536151958,
+        "chamfer_m": 0.07359549509544976,
+        "precision_2cm": 0.2598458374437775,
+        "recall_2cm": 0.39261845269608947,
+        "f1_2cm": 0.3127229250042962,
+        "precision_5cm": 0.6511712675773739,
+        "recall_5cm": 0.7644582326406458,
+        "f1_5cm": 0.7032818068313831,
+        "precision_10cm": 0.9055445014797598,
+        "recall_10cm": 0.8527246122558223,
+        "f1_10cm": 0.8783411798256097
+      },
+      "source_sha256": "0a856f236a19e81d53f92f8e4140e2344e0be99c9ec69e80f970bab78460c504"
+    },
+    "uniform_support0": {
+      "metrics": {
+        "n_prediction": 223217,
+        "n_reference": 511871,
+        "accuracy_mean_m": 0.054109025615787724,
+        "accuracy_rmse_m": 0.08074398727191016,
+        "accuracy_median_m": 0.03411046634188568,
+        "accuracy_p95_m": 0.18405450169835533,
+        "completeness_mean_m": 0.12745559852498825,
+        "chamfer_m": 0.09078231207038799,
+        "precision_2cm": 0.24445270745507736,
+        "recall_2cm": 0.18115306395556693,
+        "f1_2cm": 0.20809565998574994,
+        "precision_5cm": 0.6810502784286143,
+        "recall_5cm": 0.6129552172324668,
+        "f1_5cm": 0.6452110485777726,
+        "precision_10cm": 0.8738178543748908,
+        "recall_10cm": 0.7998851273074662,
+        "f1_10cm": 0.8352185702479045
+      },
+      "source_sha256": "ae5ec167fce191c7cef1259d7713ec8f52a6ff27c34c3f3b5b226c3dc69b88f5",
+      "integration": {
+        "sequence": "V1_02_medium",
+        "variant": "uniform",
+        "frames": 322,
+        "prepared_fingerprint": "ae85a4c02ace072edfb2ca90226e179540b9ed96db66472f0fb743c379d57905",
+        "device": "cuda",
+        "voxel_m": 0.03,
+        "trunc_m": 0.12,
+        "dims": [
+          385,
+          396,
+          160
+        ],
+        "integrate_ms_mean": 18.705373601366112,
+        "integrate_ms_p90": 22.774609975749634,
+        "wall_s": 8.479152299987618,
+        "voxel_candidates_mean": 3960784.2763975156,
+        "updated_voxels_mean": 438204.44720496895,
+        "peak_cuda_allocated_bytes": 559727616,
+        "integration_code_sha256": {
+          "fusion_v2.py": "cc7a285969ad4f637014f3b4e34175562f3d9cc078e62d16bca49528bbd4f196",
+          "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8"
+        },
+        "provenance": "native VIO poses + cached stereo; no GT or scan read during integration"
+      },
+      "extraction": {
+        "vertices": 301777,
+        "faces": 589904,
+        "min_observations": 2,
+        "min_surface_support": 0,
+        "min_component_faces": 30,
+        "unobserved_or_unsupported_vertices_removed": 165654,
+        "extraction_wall_s": 0.8590846000006422
+      }
+    },
+    "uniform_support4": {
+      "metrics": {
+        "n_prediction": 178899,
+        "n_reference": 511871,
+        "accuracy_mean_m": 0.03908953199917755,
+        "accuracy_rmse_m": 0.050791019979567684,
+        "accuracy_median_m": 0.030398803287174182,
+        "accuracy_p95_m": 0.09625902241668724,
+        "completeness_mean_m": 0.15857704298891742,
+        "chamfer_m": 0.09883328749404749,
+        "precision_2cm": 0.276178178748903,
+        "recall_2cm": 0.16489896868546958,
+        "f1_2cm": 0.20650127586082412,
+        "precision_5cm": 0.7643642502193976,
+        "recall_5cm": 0.5671057746971405,
+        "f1_5cm": 0.6511230026355905,
+        "precision_10cm": 0.9557068513518802,
+        "recall_10cm": 0.7492082966216097,
+        "f1_10cm": 0.8399520680217192
+      },
+      "source_sha256": "a67a0c8415b29809850e561f544058b25a37d5ed11110d7fe4fe2a56206b84cb",
+      "integration": {
+        "sequence": "V1_02_medium",
+        "variant": "uniform",
+        "frames": 322,
+        "prepared_fingerprint": "ae85a4c02ace072edfb2ca90226e179540b9ed96db66472f0fb743c379d57905",
+        "device": "cuda",
+        "voxel_m": 0.03,
+        "trunc_m": 0.12,
+        "dims": [
+          385,
+          396,
+          160
+        ],
+        "integrate_ms_mean": 18.705373601366112,
+        "integrate_ms_p90": 22.774609975749634,
+        "wall_s": 8.479152299987618,
+        "voxel_candidates_mean": 3960784.2763975156,
+        "updated_voxels_mean": 438204.44720496895,
+        "peak_cuda_allocated_bytes": 559727616,
+        "integration_code_sha256": {
+          "fusion_v2.py": "cc7a285969ad4f637014f3b4e34175562f3d9cc078e62d16bca49528bbd4f196",
+          "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8"
+        },
+        "provenance": "native VIO poses + cached stereo; no GT or scan read during integration"
+      },
+      "extraction": {
+        "vertices": 234049,
+        "faces": 455663,
+        "min_observations": 2,
+        "min_surface_support": 4,
+        "min_component_faces": 30,
+        "unobserved_or_unsupported_vertices_removed": 238949,
+        "extraction_wall_s": 0.7418557000346482
+      }
+    },
+    "surfel_uniform_support6_cc30": {
+      "metrics": {
+        "n_prediction": 340353,
+        "n_reference": 511871,
+        "accuracy_mean_m": 0.041609630178730164,
+        "accuracy_rmse_m": 0.05167998461275842,
+        "accuracy_median_m": 0.03353481472824185,
+        "accuracy_p95_m": 0.1005126873042102,
+        "completeness_mean_m": 0.22938484217930416,
+        "chamfer_m": 0.13549723617901716,
+        "precision_2cm": 0.29257858752530463,
+        "recall_2cm": 0.3226379302597725,
+        "f1_2cm": 0.30687391247992823,
+        "precision_5cm": 0.6904272916648303,
+        "recall_5cm": 0.5853799101726802,
+        "f1_5cm": 0.633578906583097,
+        "precision_10cm": 0.9485034655196223,
+        "recall_10cm": 0.660850096997095,
+        "f1_10cm": 0.7789694219963701
+      },
+      "source_sha256": "8d6afc285c88f88dcf3897b2fe54c397e4c0f52e336c3b9333bd6d29893e89f3",
+      "integration": {
+        "sequence": "V1_02_medium",
+        "variant": "surfel_uniform",
+        "frames": 322,
+        "prepared_fingerprint": "ae85a4c02ace072edfb2ca90226e179540b9ed96db66472f0fb743c379d57905",
+        "device": "cuda",
+        "voxel_m": 0.03,
+        "trunc_m": 0.12,
+        "dims": [
+          385,
+          396,
+          160
+        ],
+        "integrate_ms_mean": 5.5391652164662615,
+        "integrate_ms_p90": 5.630219978047535,
+        "wall_s": 3.877752900007181,
+        "voxel_candidates_mean": 295801.3354037267,
+        "updated_voxels_mean": 20363.95341614907,
+        "peak_cuda_allocated_bytes": 610185216,
+        "integration_code_sha256": {
+          "fusion_v2.py": "cc7a285969ad4f637014f3b4e34175562f3d9cc078e62d16bca49528bbd4f196",
+          "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8"
+        },
+        "provenance": "native VIO poses + cached stereo; no GT or scan read during integration"
+      },
+      "extraction": {
+        "vertices": 371131,
+        "faces": 0,
+        "representation": "surfel point surface; no mesh",
+        "min_observations": 6,
+        "min_surface_support": 6,
+        "min_component_points": 30
+      }
+    }
+  },
+  "wall_s": 12.277107999951113
+}

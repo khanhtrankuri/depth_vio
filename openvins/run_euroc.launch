@@ -1,0 +1,23 @@
+<launch>
+    <!-- Trimmed copy of ov_msckf/launch/serial.launch (OpenVINS v2.7): same estimator, no GT viz node -->
+    <arg name="bag" default="/bags/V1_01_easy.bag" />
+    <arg name="config_path" default="$(find ov_msckf)/../config/euroc_mav/estimator_config.yaml" />
+    <node name="ov_msckf" pkg="ov_msckf" type="ros1_serial_msckf" output="screen" clear_params="true" required="true">
+        <param name="path_bag"                  type="str"    value="$(arg bag)" />
+        <param name="bag_start"                 type="double" value="0" />
+        <param name="bag_durr"                  type="int"    value="-1" />
+        <param name="verbosity"                 type="str"    value="WARNING" />
+        <param name="config_path"               type="str"    value="$(arg config_path)" />
+        <param name="use_stereo"                type="bool"   value="true" />
+        <param name="max_cameras"               type="int"    value="2" />
+        <param name="record_timing_information" type="bool"   value="true" />
+        <param name="record_timing_filepath"    type="str"    value="/out/openvins_timing.txt" />
+    </node>
+    <node name="recorder_estimate" pkg="ov_eval" type="pose_to_file" output="screen" required="true">
+        <param name="topic"      type="str" value="/ov_msckf/poseimu" />
+        <param name="topic_type" type="str" value="PoseWithCovarianceStamped" />
+        <param name="output"     type="str" value="/out/openvins_traj.txt" />
+    </node>
+    <!-- sparse landmarks (SLAM + MSCKF points) for visualisation -->
+    <node name="rec_slam" pkg="rosbag" type="record" args="-O /out/openvins_points.bag /ov_msckf/points_slam /ov_msckf/points_msckf /ov_msckf/loop_feats" />
+</launch>

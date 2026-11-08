@@ -1,0 +1,116 @@
+{
+  "status": "passed",
+  "frozen_config_unchanged": true,
+  "note": "Only unused confidence calculation and repeated color remap setup were skipped. Point-coordinate tolerance allows CUDA scatter floating-point reduction order.",
+  "sequences": {
+    "V1_01_easy": {
+      "frames": 560,
+      "points": 333500,
+      "max_surface_coordinate_difference_m": 1.430511474609375e-06,
+      "pose_arrays_exactly_equal": true,
+      "ten_depth_and_color_frames_exactly_equal": true,
+      "confidence_mode": "none",
+      "prepare_ms_mean": 83.62449232060628,
+      "prepare_ms_p90": 94.02872996288352,
+      "prepare_wall_s": 46.93705279997084,
+      "integration": {
+        "sequence": "V1_01_easy",
+        "variant": "surfel_uniform",
+        "frames": 560,
+        "prepared_fingerprint": "d61fbac10e753a6854c14475d76bbc6a4eebff73a0085ce5bd058055e402cc8f",
+        "device": "cuda",
+        "voxel_m": 0.03,
+        "trunc_m": 0.12,
+        "dims": [
+          371,
+          345,
+          119
+        ],
+        "integrate_ms_mean": 5.489095357812142,
+        "integrate_ms_p90": 5.918690009275451,
+        "wall_s": 6.699123699974734,
+        "voxel_candidates_mean": 289011.4321428572,
+        "updated_voxels_mean": 17691.369642857142,
+        "peak_cuda_allocated_bytes": 385968128,
+        "integration_code_sha256": {
+          "fusion_v2.py": "2c852182b62917a12ce78dabff6acc3caf1683d4c6d8ee52e57d273f880999f1",
+          "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8"
+        },
+        "provenance": "native VIO poses + cached stereo; no GT or scan read during integration"
+      }
+    },
+    "V1_02_medium": {
+      "frames": 322,
+      "points": 371131,
+      "max_surface_coordinate_difference_m": 1.430511474609375e-06,
+      "pose_arrays_exactly_equal": true,
+      "ten_depth_and_color_frames_exactly_equal": true,
+      "confidence_mode": "none",
+      "prepare_ms_mean": 87.16963353763502,
+      "prepare_ms_p90": 97.6824399724137,
+      "prepare_wall_s": 28.131122899998445,
+      "integration": {
+        "sequence": "V1_02_medium",
+        "variant": "surfel_uniform",
+        "frames": 322,
+        "prepared_fingerprint": "2cf907164fd0025d5bf1f4fdd877d9bfb0fbc3daf5a3b4fef082062518a2c512",
+        "device": "cuda",
+        "voxel_m": 0.03,
+        "trunc_m": 0.12,
+        "dims": [
+          385,
+          396,
+          160
+        ],
+        "integrate_ms_mean": 5.687975152778896,
+        "integrate_ms_p90": 5.809520027833061,
+        "wall_s": 3.9731613000039943,
+        "voxel_candidates_mean": 295801.3354037267,
+        "updated_voxels_mean": 20363.95341614907,
+        "peak_cuda_allocated_bytes": 610185216,
+        "integration_code_sha256": {
+          "fusion_v2.py": "2c852182b62917a12ce78dabff6acc3caf1683d4c6d8ee52e57d273f880999f1",
+          "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8"
+        },
+        "provenance": "native VIO poses + cached stereo; no GT or scan read during integration"
+      }
+    },
+    "V1_03_difficult": {
+      "frames": 401,
+      "points": 415738,
+      "max_surface_coordinate_difference_m": 1.430511474609375e-06,
+      "pose_arrays_exactly_equal": true,
+      "ten_depth_and_color_frames_exactly_equal": true,
+      "confidence_mode": "none",
+      "prepare_ms_mean": 87.87731296717284,
+      "prepare_ms_p90": 100.23199999704957,
+      "prepare_wall_s": 35.316907299973536,
+      "integration": {
+        "sequence": "V1_03_difficult",
+        "variant": "surfel_uniform",
+        "frames": 401,
+        "prepared_fingerprint": "07b15f08a9c63d767940a4799c57109d2c42aee97e08257a04c92f0ad693f641",
+        "device": "cuda",
+        "voxel_m": 0.03,
+        "trunc_m": 0.12,
+        "dims": [
+          384,
+          393,
+          187
+        ],
+        "integrate_ms_mean": 5.538398255373437,
+        "integrate_ms_p90": 5.682600021827966,
+        "wall_s": 4.8643938999739476,
+        "voxel_candidates_mean": 287206.94014962594,
+        "updated_voxels_mean": 19964.71072319202,
+        "peak_cuda_allocated_bytes": 706511360,
+        "integration_code_sha256": {
+          "fusion_v2.py": "2c852182b62917a12ce78dabff6acc3caf1683d4c6d8ee52e57d273f880999f1",
+          "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8"
+        },
+        "provenance": "native VIO poses + cached stereo; no GT or scan read during integration"
+      }
+    }
+  },
+  "historical_source_checkpoint_output_hashes_unchanged": true
+}

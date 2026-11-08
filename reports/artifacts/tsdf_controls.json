@@ -1,0 +1,11 @@
+{
+  "status": "VERIFIED: synthetic integration controls only",
+  "cuda_device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "plane_depth_m": 2.0,
+  "n_voxels": 1815,
+  "max_tsdf_error": 5.960464477539063e-08,
+  "unit_weight_increment": "passed",
+  "behind_truncation_excluded": "passed",
+  "invalid_zero_depth_does_not_update": "passed",
+  "extraction_and_real_scene_accuracy": "NOT EVALUATED by this control"
+}

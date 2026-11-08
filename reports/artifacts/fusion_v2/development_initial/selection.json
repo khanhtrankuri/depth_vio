@@ -1,0 +1,16 @@
+{
+  "development_sequence": "V1_01_easy",
+  "selected": "surfel_uniform_support3",
+  "criterion": "maximize fixed-ROI F1@5cm subject to recall within 2 percentage points of native uniform/support0",
+  "heldout_sequences": [
+    "V1_02_medium",
+    "V1_03_difficult"
+  ],
+  "result_sha256": "82b4a99740af4606993be42e3bc204035d95d4f1464aa29ac3bb1cad74865af1",
+  "code_sha256": {
+    "fusion_confidence.py": "c7d904cd4a91de1ed3b71d5f7a51f77d8e88951e14ed3a5d495257c5b3198a25",
+    "fusion_geometry.py": "7e4d7a7f4ac33e4dda35d14bbb5abeef981451630dfc482d2ed7f2f958f895ba",
+    "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8",
+    "fusion_v2.py": "480d80c145470ade0d170e05e6964e6be1b1f3ea92d0f691c8c2187bd5de1fad"
+  }
+}

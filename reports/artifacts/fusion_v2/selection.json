@@ -1,0 +1,22 @@
+{
+  "development_sequence": "V1_01_easy",
+  "selected": "surfel_uniform_support6_cc30",
+  "variant": "surfel_uniform",
+  "min_surface_support": 6,
+  "min_component_points": 30,
+  "min_component_faces": 30,
+  "criterion": "fastest integration within 0.5pp of best development F1@5cm; recall no more than 2pp below native uniform/support0; ties use higher F1",
+  "best_development_f1": 0.6437487540909769,
+  "heldout_sequences": [
+    "V1_02_medium",
+    "V1_03_difficult"
+  ],
+  "history": "Development candidate search expanded before any held-out metrics; quality-only selector replaced by balanced selector to honor user priority. Earlier selections preserved.",
+  "result_sha256": "0309a358d595c5c8df8b7f7cf7eaf21d169238cab6ff590cfcace57d8ae299b9",
+  "code_sha256": {
+    "fusion_confidence.py": "c7d904cd4a91de1ed3b71d5f7a51f77d8e88951e14ed3a5d495257c5b3198a25",
+    "fusion_geometry.py": "7e4d7a7f4ac33e4dda35d14bbb5abeef981451630dfc482d2ed7f2f958f895ba",
+    "fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8",
+    "fusion_v2.py": "cc7a285969ad4f637014f3b4e34175562f3d9cc078e62d16bca49528bbd4f196"
+  }
+}

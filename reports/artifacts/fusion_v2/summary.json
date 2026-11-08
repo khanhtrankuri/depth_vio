@@ -1,0 +1,12 @@
+{
+  "selected": "surfel_uniform_support6_cc30",
+  "heldout_acceptance": "mean error below legacy TSDF and F1 no more than 1pp below it on each held-out sequence",
+  "heldout_acceptance_passed": true,
+  "mean_error_reduction_vs_legacy_tsdf_percent": {
+    "V1_01_easy": 46.81812599307238,
+    "V1_02_medium": 25.114248748404233,
+    "V1_03_difficult": 30.547559124835356
+  },
+  "integration_speedup": 6.772572799316769,
+  "no_claim": "Not universal best, not calibrated uncertainty, not end-to-end real-time, not watertight mesh"
+}

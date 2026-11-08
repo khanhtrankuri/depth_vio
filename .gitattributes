@@ -1,0 +1,3 @@
+# Preserve byte-for-byte scientific source/artifact fingerprints across platforms.
+* -text
+*.png binary

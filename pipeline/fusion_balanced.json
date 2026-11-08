@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "variant": "surfel_uniform",
+  "min_surface_support": 6,
+  "min_component_points": 30,
+  "min_component_faces": 30,
+  "voxel_m": 0.03,
+  "trunc_m": 0.12,
+  "zmax_m": 4.0,
+  "point_surface_not_mesh": true,
+  "selected_on": "V1_01_easy",
+  "selection_sha256": "7fa7bedb749ff786c5a7ea53da03d85f7b936469dae587bbcc0db60eb24314a3"
+}

@@ -1,0 +1,49 @@
+{
+  "opencv": "4.2.0",
+  "numpy": "1.17.4",
+  "backend": "CPU, existing OpenVINS Docker image, default OpenCV threads",
+  "opencv_threads": 16,
+  "warmup": 5,
+  "repeats": 30,
+  "sequences": {
+    "V1_01_easy": {
+      "timestamp_ns": 1403715308262142976,
+      "preprocess_ms_mean": 1.236305399925186,
+      "compute_ms_mean": 13.4489259666528,
+      "compute_ms_p50": 12.570075999974506,
+      "compute_ms_p90": 16.49703139992198,
+      "total_rectify_compute_depth_ms_mean": 16.66122359996128,
+      "timing_scope": "in-memory images; excludes disk decode, calibration-map setup, VIO, mapping",
+      "disparity_valid_frac": 0.7324800531914893,
+      "fraction_different_from_cached": 0.27759031471631207,
+      "max_disparity_difference_px": 96.0,
+      "left_rect_max_difference": 3
+    },
+    "V1_02_medium": {
+      "timestamp_ns": 1403715558912143104,
+      "preprocess_ms_mean": 1.1951989332677233,
+      "compute_ms_mean": 14.466081233422301,
+      "compute_ms_p50": 13.100100999963615,
+      "compute_ms_p90": 17.996134800159783,
+      "total_rectify_compute_depth_ms_mean": 17.373346066536516,
+      "timing_scope": "in-memory images; excludes disk decode, calibration-map setup, VIO, mapping",
+      "disparity_valid_frac": 0.697052304964539,
+      "fraction_different_from_cached": 0.34432070035460993,
+      "max_disparity_difference_px": 94.0625,
+      "left_rect_max_difference": 5
+    },
+    "V1_03_difficult": {
+      "timestamp_ns": 1403715921584058112,
+      "preprocess_ms_mean": 1.2399458333978448,
+      "compute_ms_mean": 13.818538466542426,
+      "compute_ms_p50": 13.272192999920662,
+      "compute_ms_p90": 15.72623809961442,
+      "total_rectify_compute_depth_ms_mean": 16.684842100069847,
+      "timing_scope": "in-memory images; excludes disk decode, calibration-map setup, VIO, mapping",
+      "disparity_valid_frac": 0.6305795656028369,
+      "fraction_different_from_cached": 0.3189744015957447,
+      "max_disparity_difference_px": 96.0,
+      "left_rect_max_difference": 3
+    }
+  }
+}

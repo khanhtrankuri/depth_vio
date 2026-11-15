@@ -1,0 +1,159 @@
+{
+  "status": "completed",
+  "sequence": "V1_01_easy",
+  "settings": {
+    "information_weight": 4,
+    "depth_hz": 1,
+    "sigma_px": 1,
+    "relative_sigma": 0.025,
+    "zmin_m": 0.2,
+    "zmax_m": 4,
+    "exposure_phase": 0,
+    "selection_sequence": "V1_01_easy",
+    "selection_report": "reports/10_depth_weight_frequency_sweep.md",
+    "qualification": "GT-guided tuning on V1_01 only; RPE translation tradeoffs retained"
+  },
+  "trajectory": {
+    "poses": 1446,
+    "duration_s": 144.5,
+    "initialization_delay_s": 1.050000128,
+    "last_image_lag_s": 0.0,
+    "max_pose_gap_s": 0.1
+  },
+  "surface": {
+    "vertices": 335948,
+    "faces": 0,
+    "representation": "surfel point surface; no mesh",
+    "min_observations": 6,
+    "min_surface_support": 6,
+    "min_component_points": 30
+  },
+  "metrics": {
+    "protocol": "common exposure timestamps across all methods; GT nearest <=10ms; SE3 fit per method on all common positions; scale fixed to 1; all valid 1s/5s pairs",
+    "matched": 1436,
+    "duration_s": 143.5,
+    "max_gt_association_ms": 0.000152,
+    "evaluator_sha256": "dc07acd1f4a78c3202d00596dfa56982a15e17a25ecea23ab7c67305206954d5",
+    "evo_crosscheck": true,
+    "reference": "raw state_groundtruth_estimate0; known V1_01 orientation caveat, no method-derived correction",
+    "results": {
+      "baseline": {
+        "n": 1436,
+        "ATE_RMSE_m": 0.046982214104663626,
+        "ATE_max_m": 0.0834306618614019,
+        "alignment_R": [
+          [
+            0.9691461460131284,
+            -0.24645928429098093,
+            -0.003683592631824442
+          ],
+          [
+            0.24647269640424208,
+            0.9691423546633473,
+            0.003782370262813539
+          ],
+          [
+            0.002637725368930433,
+            -0.004573574571420947,
+            0.9999860623131294
+          ]
+        ],
+        "alignment_t": [
+          0.9021511323614599,
+          2.144715938038735,
+          0.9267153844518639
+        ],
+        "evo_ATE_max_abs_difference_m": 0.0,
+        "RPE_1s": {
+          "pairs": 1426,
+          "translation_RMSE_m": 0.042653998168316345,
+          "rotation_RMSE_deg": 0.7185729693004052,
+          "evo_max_abs_difference_m": 1.0998146837692957e-15,
+          "evo_max_abs_difference_deg": 6.661338147750939e-15
+        },
+        "RPE_5s": {
+          "pairs": 1386,
+          "translation_RMSE_m": 0.16321468300754918,
+          "rotation_RMSE_deg": 2.1106716912042587,
+          "evo_max_abs_difference_m": 1.0130785099704553e-15,
+          "evo_max_abs_difference_deg": 7.549516567451064e-15
+        },
+        "input_poses": 1446
+      },
+      "depth": {
+        "n": 1436,
+        "ATE_RMSE_m": 0.04562572338920127,
+        "ATE_max_m": 0.08241725473192282,
+        "alignment_R": [
+          [
+            0.9675362425055904,
+            -0.2526976652092393,
+            -0.004184427794042612
+          ],
+          [
+            0.25271342416851433,
+            0.9675337301639427,
+            0.0037955553047665427
+          ],
+          [
+            0.003089447068484716,
+            -0.00472979839381441,
+            0.9999840420346546
+          ]
+        ],
+        "alignment_t": [
+          0.9006717482924911,
+          2.1418233757608927,
+          0.9232368072101866
+        ],
+        "evo_ATE_max_abs_difference_m": 0.0,
+        "RPE_1s": {
+          "pairs": 1426,
+          "translation_RMSE_m": 0.04266986388434801,
+          "rotation_RMSE_deg": 0.6422769966829058,
+          "evo_max_abs_difference_m": 8.396061623727746e-16,
+          "evo_max_abs_difference_deg": 6.2727600891321345e-15
+        },
+        "RPE_5s": {
+          "pairs": 1386,
+          "translation_RMSE_m": 0.16335426866647482,
+          "rotation_RMSE_deg": 2.066073638775938,
+          "evo_max_abs_difference_m": 9.298117831235686e-16,
+          "evo_max_abs_difference_deg": 5.329070518200751e-15
+        },
+        "input_poses": 1446
+      }
+    },
+    "source_sha256": {
+      "baseline": "b2756384cd4f4804e9530f5d092e9a169d8f090a864e0253663cf45bacb8a8f4",
+      "depth": "3e89a9e14a2f6482e14315784b81d93f4e8b37d975c172d8d6d733b9bb08559f",
+      "gt": "701200e6924ba845ccdeea884bd717c82d1ed91f480913ea6e2e6ccb9c0fbf6d"
+    },
+    "ATE_RMSE_m_change_percent": -2.8872430584911624
+  },
+  "reference_note": "Frozen earlier depth-OFF run; not a fresh paired baseline",
+  "input_bag_sha256": "460c7e462a458601cf8470c81314940da1e0ccb66c5db7121ceffb822634f712",
+  "reference_sha256": "b2756384cd4f4804e9530f5d092e9a169d8f090a864e0253663cf45bacb8a8f4",
+  "trajectory_sha256": "3e89a9e14a2f6482e14315784b81d93f4e8b37d975c172d8d6d733b9bb08559f",
+  "cloud_sha256": "7fe036043e09eae0833890aeb1c2bb9b81c9e50f079c82cad723c7848f920e7c",
+  "image_id": "sha256:8b1efb0d75208f2da28088c082c5127d24441c1c6e0579399eed291407a62117",
+  "source_sha256": {
+    "pipeline\\run_tuned_pipeline.py": "58d0faf14c72d8d5d5976ea7a06ff5baae0c5ecfc4f12da818045569dcfb16d0",
+    "pipeline\\run_vins_fusion.py": "dd8da86a1735ad2206030d0a9ced9a42cb3272a68fdb03c1f53a16b22e1ac968",
+    "pipeline\\fusion_v2.py": "0026f6e591f39c6b6c669b04142550903216307ad9e7985d82a823490e8b7f24",
+    "pipeline\\fusion_tsdf.py": "9fb3ca25288b113e599616fbc080cdda7843f18f18086cfaf4eb232a06b64cc8",
+    "vins_fusion\\tuned_config.json": "19aa529eb0a59c13f859de62c772a1c43f84736a248d250aefa573a15b149629"
+  },
+  "estimator_validation": {
+    "solver_evaluation_failures": 0,
+    "depth_factor_diagnostics": {
+      "optimizations": 1446,
+      "with_depth": 1275,
+      "max_factors": 224,
+      "mean_factors": 78.05739972337483
+    },
+    "entrypoint_sha256": "1f2a8bcb44639da2018fe3b8c04fd0ed4add49de81fd1c14c3b6d62bda317085",
+    "source_commit": "be55a937a57436548ddfb1bd324bc1e9a9e828e0"
+  },
+  "published_utc": "2026-11-15T20:31:05.330448+00:00"
+}

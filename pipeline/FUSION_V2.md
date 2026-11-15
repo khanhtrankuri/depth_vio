@@ -1,9 +1,11 @@
 # Fusion v2: balanced depth + VIO mapping
 
 The old `stage8_fusion.py` remains available as a baseline. Development outputs
-live under `outputs/<sequence>/stage8_fusion_v2/`; the selected runner writes
-`outputs/<sequence>/stage8_fusion_balanced/`. Existing maps, estimator and weights
-are unchanged.
+live under `outputs/<sequence>/stage8_fusion_v2_vins_fusion/`; the selected runner writes
+`outputs/<sequence>/stage8_fusion_balanced_vins_fusion/` by default.
+The default pose source is now VINS-Fusion; `--vio-backend openvins` selects the
+historical input and balanced output path. The measurements in the linked
+development reports used OpenVINS and are not VINS-Fusion measurements.
 
 **Measured balanced preset:** `surfel_uniform`, 3cm voxels, at least six input
 keyframes per voxel, connected components below 30 points removed. This exports
@@ -14,7 +16,7 @@ required. See the [three-sequence results](../reports/08_fusion_architecture_imp
 ```mermaid
 flowchart LR
     C[Existing stereo disparity + binary L-R mask] --> D[Finite metric depth]
-    V[Raw OpenVINS T_WI export] --> P[Linear position + SLERP]
+    V[Native VINS-Fusion T_WI TUM export] --> P[Linear position + SLERP]
     K[Static stereo calibration] --> X[T_WCrect = T_WI T_ICraw R0 transpose]
     P --> X
     D --> W[Depth-dependent spatial confidence]
@@ -99,7 +101,7 @@ without rerunning integration. Do not select these thresholds on held-out data.
 ## Coordinate/export contracts
 
 T_AB transforms B points into A. Raw pose input is Hamilton xyzw T_WI, not camera
-pose. The exported mesh is in native OpenVINS world coordinates. Frame identifiers,
+pose. The exported mesh is in native selected-VIO world coordinates. Frame identifiers,
 raw pose hash, rectified calibration and T_I_Crect are in the prepared manifest.
 The evaluator applies one frozen SE3 registration to both map and poses only after
 integration; it never uses ICP or the VIO-fitted `gtrotcorr` orientation reference.

@@ -1,0 +1,12 @@
+{
+  "information_weight": 4,
+  "depth_hz": 1,
+  "sigma_px": 1,
+  "relative_sigma": 0.025,
+  "zmin_m": 0.2,
+  "zmax_m": 4,
+  "exposure_phase": 0,
+  "selection_sequence": "V1_01_easy",
+  "selection_report": "reports/10_depth_weight_frequency_sweep.md",
+  "qualification": "GT-guided tuning on V1_01 only; RPE translation tradeoffs retained"
+}

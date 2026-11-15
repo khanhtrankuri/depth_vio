@@ -1,0 +1,604 @@
+{
+  "status": "completed",
+  "targets": [
+    {
+      "path": "outputs\\V1_01_easy\\depth_sweep_views_v1",
+      "files": 2422,
+      "logical_bytes": 6939719964.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\igev_vins_depth_v1",
+      "files": 585,
+      "logical_bytes": 1683607273.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage1_input",
+      "files": 3,
+      "logical_bytes": 406787.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage2_rectify\\dy_hist.png",
+      "files": 1,
+      "logical_bytes": 20896.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage2_rectify\\left_rect.png",
+      "files": 1,
+      "logical_bytes": 169880.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage2_rectify\\rectified_epipolar.png",
+      "files": 1,
+      "logical_bytes": 727301.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage2_rectify\\rectified_matches.png",
+      "files": 1,
+      "logical_bytes": 823921.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage2_rectify\\right_rect.png",
+      "files": 1,
+      "logical_bytes": 168036.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage3_features",
+      "files": 6,
+      "logical_bytes": 2224476.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage4_disparity",
+      "files": 6,
+      "logical_bytes": 4966750.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage5_depth",
+      "files": 4,
+      "logical_bytes": 3826536.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage5_depth_diag_gtrotcorr",
+      "files": 4,
+      "logical_bytes": 2378525.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage6_pointcloud",
+      "files": 4,
+      "logical_bytes": 11627668.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage7_vins_fusion",
+      "files": 12,
+      "logical_bytes": 2994977.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage7_vio",
+      "files": 10,
+      "logical_bytes": 15812835.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\cams_gt.json",
+      "files": 1,
+      "logical_bytes": 181714.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\cams_gtrotcorr.json",
+      "files": 1,
+      "logical_bytes": 181439.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\cams_openvins.json",
+      "files": 1,
+      "logical_bytes": 174533.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\consistency.png",
+      "files": 1,
+      "logical_bytes": 63366.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\fused_views.png",
+      "files": 1,
+      "logical_bytes": 614255.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\fusion_gt.json",
+      "files": 1,
+      "logical_bytes": 105168.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\fusion_gtrotcorr.json",
+      "files": 1,
+      "logical_bytes": 105256.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\fusion_openvins.json",
+      "files": 1,
+      "logical_bytes": 101283.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\infer_timing.json",
+      "files": 1,
+      "logical_bytes": 98.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\naive_accum_gt.ply",
+      "files": 1,
+      "logical_bytes": 46494210.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\naive_accum_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 46494210.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\naive_accum_openvins.ply",
+      "files": 1,
+      "logical_bytes": 44712210.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\tsdf_cloud_gt.ply",
+      "files": 1,
+      "logical_bytes": 6603734.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\tsdf_cloud_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 5695616.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\tsdf_cloud_openvins.ply",
+      "files": 1,
+      "logical_bytes": 5714327.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\tsdf_mesh_gt.ply",
+      "files": 1,
+      "logical_bytes": 18567141.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\tsdf_mesh_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 16010096.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\tsdf_mesh_openvins.ply",
+      "files": 1,
+      "logical_bytes": 16065823.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion\\viewer_global.npy",
+      "files": 1,
+      "logical_bytes": 2240128.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion_balanced",
+      "files": 567,
+      "logical_bytes": 277206329.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion_balanced_vins_fusion",
+      "files": 585,
+      "logical_bytes": 284716856.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage8_fusion_v2",
+      "files": 620,
+      "logical_bytes": 1352434221.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\stage9_eval",
+      "files": 15,
+      "logical_bytes": 19181754.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\vins_depth_benchmark_v1",
+      "files": 21,
+      "logical_bytes": 5660137.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\vins_depth_benchmark_v2",
+      "files": 21,
+      "logical_bytes": 5784937.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\vins_depth_eval_selfcheck",
+      "files": 2,
+      "logical_bytes": 101654.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\vins_depth_sweep_v1",
+      "files": 118,
+      "logical_bytes": 29603178.0
+    },
+    {
+      "path": "outputs\\V1_01_easy\\single_frame_summary.json",
+      "files": 1,
+      "logical_bytes": 3819.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage1_input",
+      "files": 3,
+      "logical_bytes": 370250.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage2_rectify\\dy_hist.png",
+      "files": 1,
+      "logical_bytes": 20629.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage2_rectify\\left_rect.png",
+      "files": 1,
+      "logical_bytes": 153753.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage2_rectify\\rectified_epipolar.png",
+      "files": 1,
+      "logical_bytes": 643781.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage2_rectify\\rectified_matches.png",
+      "files": 1,
+      "logical_bytes": 747508.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage2_rectify\\right_rect.png",
+      "files": 1,
+      "logical_bytes": 154288.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage3_features",
+      "files": 6,
+      "logical_bytes": 2204828.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage4_disparity",
+      "files": 6,
+      "logical_bytes": 4974147.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage5_depth",
+      "files": 4,
+      "logical_bytes": 3801284.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage5_depth_diag_gtrotcorr",
+      "files": 4,
+      "logical_bytes": 2340691.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage6_pointcloud",
+      "files": 4,
+      "logical_bytes": 12064326.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage7_vio",
+      "files": 9,
+      "logical_bytes": 8639323.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\cams_gt.json",
+      "files": 1,
+      "logical_bytes": 105687.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\cams_gtrotcorr.json",
+      "files": 1,
+      "logical_bytes": 105669.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\cams_openvins.json",
+      "files": 1,
+      "logical_bytes": 99067.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\consistency.png",
+      "files": 1,
+      "logical_bytes": 65813.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\fused_views.png",
+      "files": 1,
+      "logical_bytes": 684061.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\fusion_gt.json",
+      "files": 1,
+      "logical_bytes": 61326.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\fusion_gtrotcorr.json",
+      "files": 1,
+      "logical_bytes": 61349.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\fusion_openvins.json",
+      "files": 1,
+      "logical_bytes": 57472.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\infer_timing.json",
+      "files": 1,
+      "logical_bytes": 97.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\naive_accum_gt.ply",
+      "files": 1,
+      "logical_bytes": 27135210.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\naive_accum_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 27135210.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\naive_accum_openvins.ply",
+      "files": 1,
+      "logical_bytes": 25434209.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\tsdf_cloud_gt.ply",
+      "files": 1,
+      "logical_bytes": 6862745.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\tsdf_cloud_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 6879161.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\tsdf_cloud_openvins.ply",
+      "files": 1,
+      "logical_bytes": 7066703.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\tsdf_mesh_gt.ply",
+      "files": 1,
+      "logical_bytes": 19332283.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\tsdf_mesh_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 19374276.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\tsdf_mesh_openvins.ply",
+      "files": 1,
+      "logical_bytes": 19909196.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion\\viewer_global.npy",
+      "files": 1,
+      "logical_bytes": 2240128.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion_balanced",
+      "files": 329,
+      "logical_bytes": 177256407.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage8_fusion_v2",
+      "files": 337,
+      "logical_bytes": 651912309.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\stage9_eval",
+      "files": 15,
+      "logical_bytes": 14793205.0
+    },
+    {
+      "path": "outputs\\V1_02_medium\\single_frame_summary.json",
+      "files": 1,
+      "logical_bytes": 3762.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage1_input",
+      "files": 3,
+      "logical_bytes": 358113.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage2_rectify\\dy_hist.png",
+      "files": 1,
+      "logical_bytes": 21992.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage2_rectify\\left_rect.png",
+      "files": 1,
+      "logical_bytes": 139540.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage2_rectify\\rectified_epipolar.png",
+      "files": 1,
+      "logical_bytes": 622993.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage2_rectify\\rectified_matches.png",
+      "files": 1,
+      "logical_bytes": 709411.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage2_rectify\\right_rect.png",
+      "files": 1,
+      "logical_bytes": 145744.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage3_features",
+      "files": 6,
+      "logical_bytes": 2072510.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage4_disparity",
+      "files": 6,
+      "logical_bytes": 4962490.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage5_depth",
+      "files": 4,
+      "logical_bytes": 3993295.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage5_depth_diag_gtrotcorr",
+      "files": 4,
+      "logical_bytes": 2518432.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage6_pointcloud",
+      "files": 4,
+      "logical_bytes": 10883031.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage7_vio",
+      "files": 9,
+      "logical_bytes": 9918624.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\cams_gt.json",
+      "files": 1,
+      "logical_bytes": 132132.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\cams_gtrotcorr.json",
+      "files": 1,
+      "logical_bytes": 132130.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\cams_openvins.json",
+      "files": 1,
+      "logical_bytes": 124260.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\consistency.png",
+      "files": 1,
+      "logical_bytes": 75726.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\fused_views.png",
+      "files": 1,
+      "logical_bytes": 689819.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\fusion_gt.json",
+      "files": 1,
+      "logical_bytes": 76401.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\fusion_gtrotcorr.json",
+      "files": 1,
+      "logical_bytes": 76398.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\fusion_openvins.json",
+      "files": 1,
+      "logical_bytes": 71846.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\infer_timing.json",
+      "files": 1,
+      "logical_bytes": 97.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\naive_accum_gt.ply",
+      "files": 1,
+      "logical_bytes": 33858210.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\naive_accum_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 33858210.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\naive_accum_openvins.ply",
+      "files": 1,
+      "logical_bytes": 31833210.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\tsdf_cloud_gt.ply",
+      "files": 1,
+      "logical_bytes": 8633432.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\tsdf_cloud_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 8393186.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\tsdf_cloud_openvins.ply",
+      "files": 1,
+      "logical_bytes": 8635268.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\tsdf_mesh_gt.ply",
+      "files": 1,
+      "logical_bytes": 24190387.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\tsdf_mesh_gtrotcorr.ply",
+      "files": 1,
+      "logical_bytes": 23502485.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\tsdf_mesh_openvins.ply",
+      "files": 1,
+      "logical_bytes": 24193894.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion\\viewer_global.npy",
+      "files": 1,
+      "logical_bytes": 2240128.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion_balanced",
+      "files": 408,
+      "logical_bytes": 216350268.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage8_fusion_v2",
+      "files": 416,
+      "logical_bytes": 766832172.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\stage9_eval",
+      "files": 15,
+      "logical_bytes": 18357031.0
+    },
+    {
+      "path": "outputs\\V1_03_difficult\\single_frame_summary.json",
+      "files": 1,
+      "logical_bytes": 3770.0
+    },
+    {
+      "path": "report\\compare_V1.html",
+      "files": 1,
+      "logical_bytes": 895279.0
+    },
+    {
+      "path": "report\\fusion_v2_comparison.html",
+      "files": 1,
+      "logical_bytes": 2185243.0
+    },
+    {
+      "path": "report\\pipeline_report_V1_02_medium.html",
+      "files": 1,
+      "logical_bytes": 8828921.0
+    },
+    {
+      "path": "report\\pipeline_report_V1_03_difficult.html",
+      "files": 1,
+      "logical_bytes": 8835108.0
+    },
+    {
+      "path": "report\\pipeline_report.html",
+      "files": 1,
+      "logical_bytes": 8899612.0
+    }
+  ],
+  "note": "Logical bytes include hardlinks and are not physical freed space",
+  "kept": [
+    "outputs/*/stage2_rectify/rectify.json",
+    "outputs/*/stage8_fusion/disp",
+    "outputs/V1_01_easy/inputs",
+    "outputs/V1_01_easy/latest",
+    "data",
+    "reports historical documentation"
+  ]
+}

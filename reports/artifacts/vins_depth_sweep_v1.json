@@ -1,0 +1,798 @@
+{
+  "summary": {
+    "plan": {
+      "sequence": "V1_01_easy",
+      "selection": "lowest position ATE RMSE on development sequence; all RPE values retained",
+      "configs": [
+        {
+          "identifier": "w0p25_hz0p5",
+          "weight": 0.25,
+          "sigma_multiplier": 2.0,
+          "hz": 0.5,
+          "frames": 73,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w0p25_hz0p5"
+        },
+        {
+          "identifier": "w0p25_hz1p0",
+          "weight": 0.25,
+          "sigma_multiplier": 2.0,
+          "hz": 1.0,
+          "frames": 146,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w0p25_hz1p0"
+        },
+        {
+          "identifier": "w0p25_hz2p0",
+          "weight": 0.25,
+          "sigma_multiplier": 2.0,
+          "hz": 2.0,
+          "frames": 291,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w0p25_hz2p0"
+        },
+        {
+          "identifier": "w1p0_hz0p5",
+          "weight": 1.0,
+          "sigma_multiplier": 1.0,
+          "hz": 0.5,
+          "frames": 73,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w1p0_hz0p5"
+        },
+        {
+          "identifier": "w1p0_hz1p0",
+          "weight": 1.0,
+          "sigma_multiplier": 1.0,
+          "hz": 1.0,
+          "frames": 146,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w1p0_hz1p0"
+        },
+        {
+          "identifier": "w1p0_hz2p0",
+          "weight": 1.0,
+          "sigma_multiplier": 1.0,
+          "hz": 2.0,
+          "frames": 291,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w1p0_hz2p0"
+        },
+        {
+          "identifier": "w4p0_hz0p5",
+          "weight": 4.0,
+          "sigma_multiplier": 0.5,
+          "hz": 0.5,
+          "frames": 73,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w4p0_hz0p5"
+        },
+        {
+          "identifier": "w4p0_hz1p0",
+          "weight": 4.0,
+          "sigma_multiplier": 0.5,
+          "hz": 1.0,
+          "frames": 146,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w4p0_hz1p0"
+        },
+        {
+          "identifier": "w4p0_hz2p0",
+          "weight": 4.0,
+          "sigma_multiplier": 0.5,
+          "hz": 2.0,
+          "frames": 291,
+          "phase": 0,
+          "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+          "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w4p0_hz2p0"
+        }
+      ],
+      "order": [
+        "w1p0_hz0p5",
+        "w4p0_hz0p5",
+        "w4p0_hz1p0",
+        "w1p0_hz1p0",
+        "w4p0_hz2p0",
+        "w0p25_hz2p0",
+        "w1p0_hz2p0",
+        "w0p25_hz0p5",
+        "w0p25_hz1p0"
+      ],
+      "screen_rate": 1.0,
+      "confirmation_rate": 0.5,
+      "confirmation_pairs": 1,
+      "image": "depth-vio-vins-igev:depth-v2",
+      "phase": "development tuning; no held-out sequence",
+      "source_sha256": {
+        "pipeline\\sweep_vins_depth.py": "ff556f5dc8e3c6d2b37467aec7ed83b191f941cdab9385992c59cd56a16edc5a",
+        "pipeline\\run_vins_fusion.py": "dd8da86a1735ad2206030d0a9ced9a42cb3272a68fdb03c1f53a16b22e1ac968",
+        "pipeline\\evaluate_vins_depth.py": "dc07acd1f4a78c3202d00596dfa56982a15e17a25ecea23ab7c67305206954d5",
+        "vins_fusion\\entrypoint.sh": "1f2a8bcb44639da2018fe3b8c04fd0ed4add49de81fd1c14c3b6d62bda317085"
+      }
+    },
+    "selected": {
+      "identifier": "w4p0_hz1p0",
+      "weight": 4.0,
+      "sigma_multiplier": 0.5,
+      "hz": 1.0,
+      "frames": 146,
+      "phase": 0,
+      "source_manifest_sha256": "b88c20a257886374a32ac9fd08f618d37ef40852c8652d18da0e87b136dad61e",
+      "depth_dir": "C:\\Users\\Lenovo\\Documents\\depth_vio\\outputs\\V1_01_easy\\depth_sweep_views_v1\\w4p0_hz1p0"
+    },
+    "screening": {
+      "protocol": "common exposure timestamps across all methods; GT nearest <=10ms; SE3 fit per method on all common positions; scale fixed to 1; all valid 1s/5s pairs",
+      "matched": 1436,
+      "duration_s": 143.5,
+      "max_gt_association_ms": 0.000152,
+      "evaluator_sha256": "dc07acd1f4a78c3202d00596dfa56982a15e17a25ecea23ab7c67305206954d5",
+      "evo_crosscheck": true,
+      "reference": "raw state_groundtruth_estimate0; known V1_01 orientation caveat, no method-derived correction",
+      "results": {
+        "baseline": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.04701592938738161,
+          "ATE_max_m": 0.0836176161481176,
+          "alignment_R": [
+            [
+              0.9687581506797505,
+              -0.24797979929577302,
+              -0.0036965704076177366
+            ],
+            [
+              0.2479932537619323,
+              0.9687543917524766,
+              0.003778167394514963
+            ],
+            [
+              0.002644159624604389,
+              -0.004576854981214104,
+              0.9999860303116052
+            ]
+          ],
+          "alignment_t": [
+            0.9020845514405038,
+            2.144521124660544,
+            0.9265007020594125
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.042656015716984075,
+            "rotation_RMSE_deg": 0.7133844054941328,
+            "evo_max_abs_difference_m": 1.2247147740396258e-15,
+            "evo_max_abs_difference_deg": 5.88418203051333e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.1632459119554578,
+            "rotation_RMSE_deg": 2.107045009090874,
+            "evo_max_abs_difference_m": 1.0685896612017132e-15,
+            "evo_max_abs_difference_deg": 6.661338147750939e-15
+          },
+          "input_poses": 1446
+        },
+        "w1p0_hz0p5": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.047209581149954785,
+          "ATE_max_m": 0.0851232231946439,
+          "alignment_R": [
+            [
+              0.9662681643363856,
+              -0.2575084082153064,
+              -0.0039056738740349053
+            ],
+            [
+              0.2575231473927497,
+              0.9662642373526812,
+              0.003905402690187557
+            ],
+            [
+              0.002768238957052619,
+              -0.004779467717172982,
+              0.999984746654376
+            ]
+          ],
+          "alignment_t": [
+            0.9026046437570876,
+            2.1435668576225617,
+            0.9249715560955647
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.04271931939039874,
+            "rotation_RMSE_deg": 0.7073229881664038,
+            "evo_max_abs_difference_m": 9.71445146547012e-16,
+            "evo_max_abs_difference_deg": 5.551115123125783e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.16369095092010488,
+            "rotation_RMSE_deg": 2.0804122083390073,
+            "evo_max_abs_difference_m": 1.0824674490095276e-15,
+            "evo_max_abs_difference_deg": 7.105427357601002e-15
+          },
+          "input_poses": 1446
+        },
+        "w4p0_hz0p5": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.04673546566106181,
+          "ATE_max_m": 0.0846336381313061,
+          "alignment_R": [
+            [
+              0.9659501309802103,
+              -0.2586988607138963,
+              -0.00390434689096967
+            ],
+            [
+              0.25871335441806265,
+              0.9659465829208028,
+              0.003820888558564688
+            ],
+            [
+              0.002782931020854091,
+              -0.00470089448458084,
+              0.9999850783316598
+            ]
+          ],
+          "alignment_t": [
+            0.9031035975375905,
+            2.140994681237235,
+            0.9244364849588476
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.04270755251870556,
+            "rotation_RMSE_deg": 0.6840847153928152,
+            "evo_max_abs_difference_m": 8.118505867571457e-16,
+            "evo_max_abs_difference_deg": 5.218048215738236e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.1636738116547976,
+            "rotation_RMSE_deg": 2.0745401680187556,
+            "evo_max_abs_difference_m": 1.096345236817342e-15,
+            "evo_max_abs_difference_deg": 7.105427357601002e-15
+          },
+          "input_poses": 1446
+        },
+        "w4p0_hz1p0": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.04575860350797764,
+          "ATE_max_m": 0.08164623042500567,
+          "alignment_R": [
+            [
+              0.9656925523994705,
+              -0.2596574367400556,
+              -0.003988707281807726
+            ],
+            [
+              0.2596717145657697,
+              0.965690204754523,
+              0.003609583859787477
+            ],
+            [
+              0.002914600258944086,
+              -0.004521502709426122,
+              0.9999855304546058
+            ]
+          ],
+          "alignment_t": [
+            0.9032727407712766,
+            2.139893477894847,
+            0.9212498916708669
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.042620290204880534,
+            "rotation_RMSE_deg": 0.601054806103918,
+            "evo_max_abs_difference_m": 1.1587952819525071e-15,
+            "evo_max_abs_difference_deg": 5.6066262743570405e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.16341401778837097,
+            "rotation_RMSE_deg": 2.050476387237685,
+            "evo_max_abs_difference_m": 1.1102230246251565e-15,
+            "evo_max_abs_difference_deg": 6.217248937900877e-15
+          },
+          "input_poses": 1446
+        },
+        "w1p0_hz1p0": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.04676683793038195,
+          "ATE_max_m": 0.08406840716393339,
+          "alignment_R": [
+            [
+              0.9665885240033465,
+              -0.2563002658633695,
+              -0.004098656291906237
+            ],
+            [
+              0.2563158309757689,
+              0.9665853397738363,
+              0.0038698482527715367
+            ],
+            [
+              0.002969857948492184,
+              -0.004791101404107368,
+              0.9999841125193456
+            ]
+          ],
+          "alignment_t": [
+            0.9030660404650908,
+            2.1430397799838956,
+            0.9234894522856258
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.04267550853040828,
+            "rotation_RMSE_deg": 0.6474273014053307,
+            "evo_max_abs_difference_m": 8.465450562766819e-16,
+            "evo_max_abs_difference_deg": 5.551115123125783e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.16351395658907308,
+            "rotation_RMSE_deg": 2.06654381647777,
+            "evo_max_abs_difference_m": 1.0547118733938987e-15,
+            "evo_max_abs_difference_deg": 5.995204332975845e-15
+          },
+          "input_poses": 1446
+        },
+        "w4p0_hz2p0": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.046146671960025476,
+          "ATE_max_m": 0.0819917933458628,
+          "alignment_R": [
+            [
+              0.9667849312237194,
+              -0.25555719124916676,
+              -0.004173578750384274
+            ],
+            [
+              0.25557264959898407,
+              0.9667827082941065,
+              0.00371695042574391
+            ],
+            [
+              0.0030850503567598307,
+              -0.004660144241260519,
+              0.9999843826380234
+            ]
+          ],
+          "alignment_t": [
+            0.9041270399691106,
+            2.136521224196854,
+            0.9198127663912081
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.042601722714464704,
+            "rotation_RMSE_deg": 0.6317816261950487,
+            "evo_max_abs_difference_m": 1.0581813203458523e-15,
+            "evo_max_abs_difference_deg": 6.772360450213455e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.16329316724485016,
+            "rotation_RMSE_deg": 2.0612446407569696,
+            "evo_max_abs_difference_m": 1.304512053934559e-15,
+            "evo_max_abs_difference_deg": 7.993605777301127e-15
+          },
+          "input_poses": 1446
+        },
+        "w0p25_hz2p0": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.04793511825082805,
+          "ATE_max_m": 0.0846366812442966,
+          "alignment_R": [
+            [
+              0.966881255080513,
+              -0.25519189260743586,
+              -0.004211474963218399
+            ],
+            [
+              0.2552084680797126,
+              0.9668776887773295,
+              0.004021537643036867
+            ],
+            [
+              0.00304571737646156,
+              -0.004963153437372018,
+              0.9999830452130768
+            ]
+          ],
+          "alignment_t": [
+            0.9064563689046277,
+            2.143471245525637,
+            0.922945873673478
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.04268608228801796,
+            "rotation_RMSE_deg": 0.6846053434583899,
+            "evo_max_abs_difference_m": 1.1223660889569942e-15,
+            "evo_max_abs_difference_deg": 5.995204332975845e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.16354691768211735,
+            "rotation_RMSE_deg": 2.079862266021171,
+            "evo_max_abs_difference_m": 9.71445146547012e-16,
+            "evo_max_abs_difference_deg": 7.438494264988549e-15
+          },
+          "input_poses": 1446
+        },
+        "w1p0_hz2p0": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.047421286409988106,
+          "ATE_max_m": 0.0845339949163221,
+          "alignment_R": [
+            [
+              0.9670148633453715,
+              -0.25468394702237546,
+              -0.004282662517051406
+            ],
+            [
+              0.25470071571704356,
+              0.9670117829357135,
+              0.003969518449092371
+            ],
+            [
+              0.003130412489932666,
+              -0.004929380548863568,
+              0.9999829507171831
+            ]
+          ],
+          "alignment_t": [
+            0.9052558667804895,
+            2.1417041259203744,
+            0.922361907983966
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.04267573230481046,
+            "rotation_RMSE_deg": 0.6860697288653582,
+            "evo_max_abs_difference_m": 8.534839501805891e-16,
+            "evo_max_abs_difference_deg": 7.105427357601002e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.1635135482463404,
+            "rotation_RMSE_deg": 2.0790230427107126,
+            "evo_max_abs_difference_m": 9.992007221626409e-16,
+            "evo_max_abs_difference_deg": 6.217248937900877e-15
+          },
+          "input_poses": 1446
+        },
+        "w0p25_hz0p5": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.04757343941278603,
+          "ATE_max_m": 0.08596590390772972,
+          "alignment_R": [
+            [
+              0.9656666485409331,
+              -0.25975579953438205,
+              -0.003853375659847028
+            ],
+            [
+              0.25977039222584103,
+              0.965662344576078,
+              0.003947099018795431
+            ],
+            [
+              0.002695777912751671,
+              -0.004812574787491363,
+              0.9999847858369446
+            ]
+          ],
+          "alignment_t": [
+            0.9046858748871072,
+            2.141486036390405,
+            0.925022299927976
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.042754773580754996,
+            "rotation_RMSE_deg": 0.7241922347581666,
+            "evo_max_abs_difference_m": 8.257283745649602e-16,
+            "evo_max_abs_difference_deg": 5.773159728050814e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.16384260505996404,
+            "rotation_RMSE_deg": 2.088663995174783,
+            "evo_max_abs_difference_m": 8.881784197001252e-16,
+            "evo_max_abs_difference_deg": 7.549516567451064e-15
+          },
+          "input_poses": 1446
+        },
+        "w0p25_hz1p0": {
+          "n": 1436,
+          "ATE_RMSE_m": 0.04721006837443253,
+          "ATE_max_m": 0.0853993412937421,
+          "alignment_R": [
+            [
+              0.9659448580676203,
+              -0.2587167269147781,
+              -0.004023230944062593
+            ],
+            [
+              0.25873207317566677,
+              0.9659411636040132,
+              0.003922086886831712
+            ],
+            [
+              0.0028714948975191944,
+              -0.00482945854425136,
+              0.9999842152990344
+            ]
+          ],
+          "alignment_t": [
+            0.9037630635725225,
+            2.1421437506248315,
+            0.9244250494178228
+          ],
+          "evo_ATE_max_abs_difference_m": 0.0,
+          "RPE_1s": {
+            "pairs": 1426,
+            "translation_RMSE_m": 0.04271111791554346,
+            "rotation_RMSE_deg": 0.6764357817304764,
+            "evo_max_abs_difference_m": 1.106753577673203e-15,
+            "evo_max_abs_difference_deg": 6.661338147750939e-15
+          },
+          "RPE_5s": {
+            "pairs": 1386,
+            "translation_RMSE_m": 0.16369123790230908,
+            "rotation_RMSE_deg": 2.0761647787325614,
+            "evo_max_abs_difference_m": 9.43689570931383e-16,
+            "evo_max_abs_difference_deg": 7.105427357601002e-15
+          },
+          "input_poses": 1446
+        }
+      },
+      "source_sha256": {
+        "baseline": "39e0508b398bced736399f891529478bee16d6d6bf177842c36d172d1df897cf",
+        "w1p0_hz0p5": "3f4671fd19f18473accbce0daee81db1a564f1a128bda0c54511b164217926c9",
+        "w4p0_hz0p5": "3e8305afe96692a66d44d4e2528714f3d93e423afccb3dad6bb9673ccff7e9fe",
+        "w4p0_hz1p0": "0e517523b6a78526ef0b7045db4066116e9b9e914006c4137e09bea602ca8209",
+        "w1p0_hz1p0": "a452bddd6af2fce4d964dbd924c5308ce55bbad5df3174154d5af841c8f3156d",
+        "w4p0_hz2p0": "bbea9bb518e044a2a8c41697c3ae4f5291fd61d1472ce3de71a000fbcb9586f2",
+        "w0p25_hz2p0": "9ad3561b9c215872587e64574a63b8a40f1f02fc0f0984b54dd542336281342d",
+        "w1p0_hz2p0": "6c620a82e98d284b6dc63cb3f94fb6b5055ff22e7804a702afa9ed271ee1f05d",
+        "w0p25_hz0p5": "c300341167ebfd417c5aa15c197d9a11f815028f717810d0a286a6b11c9eca04",
+        "w0p25_hz1p0": "7a004b693827ea736b227c9732a0b6e545d4f45c4c6d17c9ff8f1abcbcdf9acc",
+        "gt": "701200e6924ba845ccdeea884bd717c82d1ed91f480913ea6e2e6ccb9c0fbf6d"
+      }
+    },
+    "confirmation": [
+      {
+        "protocol": "common exposure timestamps across all methods; GT nearest <=10ms; SE3 fit per method on all common positions; scale fixed to 1; all valid 1s/5s pairs",
+        "matched": 1436,
+        "duration_s": 143.5,
+        "max_gt_association_ms": 0.000152,
+        "evaluator_sha256": "dc07acd1f4a78c3202d00596dfa56982a15e17a25ecea23ab7c67305206954d5",
+        "evo_crosscheck": true,
+        "reference": "raw state_groundtruth_estimate0; known V1_01 orientation caveat, no method-derived correction",
+        "results": {
+          "baseline": {
+            "n": 1436,
+            "ATE_RMSE_m": 0.046982214104663626,
+            "ATE_max_m": 0.0834306618614019,
+            "alignment_R": [
+              [
+                0.9691461460131284,
+                -0.24645928429098093,
+                -0.003683592631824442
+              ],
+              [
+                0.24647269640424208,
+                0.9691423546633473,
+                0.003782370262813539
+              ],
+              [
+                0.002637725368930433,
+                -0.004573574571420947,
+                0.9999860623131294
+              ]
+            ],
+            "alignment_t": [
+              0.9021511323614599,
+              2.144715938038735,
+              0.9267153844518639
+            ],
+            "evo_ATE_max_abs_difference_m": 0.0,
+            "RPE_1s": {
+              "pairs": 1426,
+              "translation_RMSE_m": 0.042653998168316345,
+              "rotation_RMSE_deg": 0.7185729693004052,
+              "evo_max_abs_difference_m": 1.0998146837692957e-15,
+              "evo_max_abs_difference_deg": 6.661338147750939e-15
+            },
+            "RPE_5s": {
+              "pairs": 1386,
+              "translation_RMSE_m": 0.16321468300754918,
+              "rotation_RMSE_deg": 2.1106716912042587,
+              "evo_max_abs_difference_m": 1.0130785099704553e-15,
+              "evo_max_abs_difference_deg": 7.549516567451064e-15
+            },
+            "input_poses": 1446
+          },
+          "candidate": {
+            "n": 1436,
+            "ATE_RMSE_m": 0.04597249472573425,
+            "ATE_max_m": 0.08444488721232665,
+            "alignment_R": [
+              [
+                0.966260622359828,
+                -0.25753248757457153,
+                -0.004174628181215194
+              ],
+              [
+                0.2575481855090947,
+                0.9662580040090537,
+                0.003794974230730635
+              ],
+              [
+                0.003056438739939522,
+                -0.0047421020752723775,
+                0.9999840851984283
+              ]
+            ],
+            "alignment_t": [
+              0.9018236084567592,
+              2.1377091992332695,
+              0.9228284577508246
+            ],
+            "evo_ATE_max_abs_difference_m": 0.0,
+            "RPE_1s": {
+              "pairs": 1426,
+              "translation_RMSE_m": 0.04268401687074002,
+              "rotation_RMSE_deg": 0.6806221564313727,
+              "evo_max_abs_difference_m": 9.419548474554063e-16,
+              "evo_max_abs_difference_deg": 6.661338147750939e-15
+            },
+            "RPE_5s": {
+              "pairs": 1386,
+              "translation_RMSE_m": 0.1635750114512153,
+              "rotation_RMSE_deg": 2.0786125252222774,
+              "evo_max_abs_difference_m": 8.604228440844963e-16,
+              "evo_max_abs_difference_deg": 6.994405055138486e-15
+            },
+            "input_poses": 1446
+          }
+        },
+        "source_sha256": {
+          "baseline": "b2756384cd4f4804e9530f5d092e9a169d8f090a864e0253663cf45bacb8a8f4",
+          "candidate": "0ca163b6012149820da5201b9489f379c9cbfde28087e776e51faaa9abcd1c39",
+          "gt": "701200e6924ba845ccdeea884bd717c82d1ed91f480913ea6e2e6ccb9c0fbf6d"
+        }
+      }
+    ],
+    "failures": {}
+  },
+  "confirmation_summary": [
+    {
+      "pair": 1,
+      "baseline": {
+        "n": 1436,
+        "ATE_RMSE_m": 0.046982214104663626,
+        "ATE_max_m": 0.0834306618614019,
+        "alignment_R": [
+          [
+            0.9691461460131284,
+            -0.24645928429098093,
+            -0.003683592631824442
+          ],
+          [
+            0.24647269640424208,
+            0.9691423546633473,
+            0.003782370262813539
+          ],
+          [
+            0.002637725368930433,
+            -0.004573574571420947,
+            0.9999860623131294
+          ]
+        ],
+        "alignment_t": [
+          0.9021511323614599,
+          2.144715938038735,
+          0.9267153844518639
+        ],
+        "evo_ATE_max_abs_difference_m": 0.0,
+        "RPE_1s": {
+          "pairs": 1426,
+          "translation_RMSE_m": 0.042653998168316345,
+          "rotation_RMSE_deg": 0.7185729693004052,
+          "evo_max_abs_difference_m": 1.0998146837692957e-15,
+          "evo_max_abs_difference_deg": 6.661338147750939e-15
+        },
+        "RPE_5s": {
+          "pairs": 1386,
+          "translation_RMSE_m": 0.16321468300754918,
+          "rotation_RMSE_deg": 2.1106716912042587,
+          "evo_max_abs_difference_m": 1.0130785099704553e-15,
+          "evo_max_abs_difference_deg": 7.549516567451064e-15
+        },
+        "input_poses": 1446
+      },
+      "candidate": {
+        "n": 1436,
+        "ATE_RMSE_m": 0.04597249472573425,
+        "ATE_max_m": 0.08444488721232665,
+        "alignment_R": [
+          [
+            0.966260622359828,
+            -0.25753248757457153,
+            -0.004174628181215194
+          ],
+          [
+            0.2575481855090947,
+            0.9662580040090537,
+            0.003794974230730635
+          ],
+          [
+            0.003056438739939522,
+            -0.0047421020752723775,
+            0.9999840851984283
+          ]
+        ],
+        "alignment_t": [
+          0.9018236084567592,
+          2.1377091992332695,
+          0.9228284577508246
+        ],
+        "evo_ATE_max_abs_difference_m": 0.0,
+        "RPE_1s": {
+          "pairs": 1426,
+          "translation_RMSE_m": 0.04268401687074002,
+          "rotation_RMSE_deg": 0.6806221564313727,
+          "evo_max_abs_difference_m": 9.419548474554063e-16,
+          "evo_max_abs_difference_deg": 6.661338147750939e-15
+        },
+        "RPE_5s": {
+          "pairs": 1386,
+          "translation_RMSE_m": 0.1635750114512153,
+          "rotation_RMSE_deg": 2.0786125252222774,
+          "evo_max_abs_difference_m": 8.604228440844963e-16,
+          "evo_max_abs_difference_deg": 6.994405055138486e-15
+        },
+        "input_poses": 1446
+      },
+      "changes": {
+        "ATE_percent": -2.149152393456788,
+        "RPE_trans_1s_percent": 0.07037723006695362,
+        "RPE_rot_1s_percent": -5.281413925990142,
+        "RPE_trans_5s_percent": 0.22076962502783903,
+        "RPE_rot_5s_percent": -1.5189082279153387
+      }
+    }
+  ],
+  "confirmed_ATE_better": true,
+  "confirmed_ATE_and_both_1s_RPE_better": false,
+  "confirmed_all_five_metrics_nonworse": false,
+  "qualification": "GT-guided tuning and repeated replay on V1_01 only; not independent generalisation validation",
+  "source_sha256": {
+    "pipeline\\prepare_depth_sweep.py": "06ccc074a422009ff11ad7b8b0627cd462d8ecf2e242a255b1745a5ca571577c",
+    "pipeline\\sweep_vins_depth.py": "ff556f5dc8e3c6d2b37467aec7ed83b191f941cdab9385992c59cd56a16edc5a",
+    "pipeline\\evaluate_vins_depth.py": "dc07acd1f4a78c3202d00596dfa56982a15e17a25ecea23ab7c67305206954d5"
+  }
+}

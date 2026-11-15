@@ -393,7 +393,7 @@ vio_report+=table(['Sequence','cached estimator mean ms','cached p90 ms'],[[s,f(
 vio_report+='''Các giá trị này được **VERIFIED bằng tính lại trên timing log**, nhưng clock measurements
 vẫn là historical run; không tính rosbag I/O, recording, ROS publication hay toàn pipeline.
 CPU utilization và peak RSS historical không có telemetry: NOT EVALUATED.
-Không có VINS-Fusion/ORB-SLAM3 source, binaries hoặc trajectories trong workspace để so sánh.
+Tại thời điểm audit 2026-11-07, không có VINS-Fusion/ORB-SLAM3 source, binaries hoặc trajectories trong workspace để so sánh. VINS-Fusion đã được tích hợp sau audit; các bảng trên vẫn là kết quả OpenVINS.
 
 ## Covariance thực có và frame của nó
 

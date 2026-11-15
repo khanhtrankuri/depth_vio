@@ -6,7 +6,7 @@ Examples from repository root:
  python pipeline/fusion_v2.py extract --sequence V1_01_easy --variant temporal
 
 No Leica, GT trajectory, GT-derived rotation correction, or scan registration is
-read by this module. Existing depth inference caches and raw OpenVINS poses are
+read by this module. Existing depth inference caches and raw IMU poses are
 inputs. Separate phases also support machines with split CPU/GPU dependencies.
 """
 import argparse
@@ -43,7 +43,8 @@ def validate_confidence_variant(variant,mode):
 
 
 def workdir(args):
-    return Path(args.work) if args.work else ROOT/'outputs'/args.sequence/'stage8_fusion_v2'
+    suffix='stage8_fusion_v2_vins_fusion' if getattr(args,'vio_backend','vins-fusion')=='vins-fusion' else 'stage8_fusion_v2'
+    return Path(args.work) if args.work else ROOT/'outputs'/args.sequence/suffix
 
 
 def rectification_coordinates(cam,R0,sensor):
@@ -68,7 +69,12 @@ def rectified_gray(image_path,cam,R0,sensor,coordinates=None):
 
 def prepare(args):
     work=workdir(args); target=work/'prepared'; target.mkdir(parents=True,exist_ok=True)
-    pose_path=Path(args.poses) if args.poses else ROOT/'outputs'/args.sequence/'stage7_vio/openvins_traj.txt'
+    backend=getattr(args,'vio_backend','vins-fusion')
+    default_pose={'vins-fusion':'stage7_vins_fusion/vins_fusion_traj_tum.txt',
+                  'openvins':'stage7_vio/openvins_traj.txt'}[backend]
+    pose_path=Path(args.poses).resolve() if args.poses else ROOT/'outputs'/args.sequence/default_pose
+    if not pose_path.is_file():
+        raise FileNotFoundError(f'Missing {backend} IMU trajectory: {pose_path}. Run pipeline/run_vins_fusion.py first or supply --poses with T_WI TUM poses.')
     stream=PoseStream(pose_path)
     cam,ext,R0,sensor=calibration(ROOT,args.sequence); rays=cam.rays()
     color_coordinates=rectification_coordinates(cam,R0,sensor)
@@ -77,9 +83,9 @@ def prepare(args):
     config=dict(sequence=args.sequence,camera=asdict(cam),confidence=asdict(cfg),confidence_mode=args.confidence_mode,zmin=args.zmin,zmax=args.zmax,
                 voxel=args.voxel,trunc=args.trunc,poses=str(pose_path.relative_to(ROOT)) if pose_path.is_relative_to(ROOT) else str(pose_path),
                 poses_sha256=sha(pose_path),T_I_Crect=ext.tolist(),pose_interpolation='linear+SLERP; no extrapolation',
-                coordinate_frame='native OpenVINS global; no GT-derived registration',
-                covariance='blocks available but NOT treated as calibrated uncertainty or fused',
-                timestamp_note='raw pose timestamps assumed IMU-time; online camera-IMU offset not exported by legacy run',
+                vio_backend=backend,coordinate_frame=f'native {backend} global; no GT-derived registration',
+                covariance='not available' if stream.covariance_blocks is None else 'blocks retained but NOT treated as calibrated uncertainty or fused',
+                timestamp_note='VINS image timestamps; fixed td=0 in supplied runner' if backend=='vins-fusion' else 'raw pose timestamps assumed IMU-time; online offset not exported by legacy run',
                 legacy_cache_note='cache has no historical model/calibration fingerprint; provenance remains conditional',
                 source_fingerprint={str(p.relative_to(ROOT)):dict(bytes=p.stat().st_size,sha256=sha(p)) for p in cache},
                 code_fingerprint={p.name:sha(p) for p in [Path(__file__),ROOT/'pipeline/fusion_geometry.py',ROOT/'pipeline/fusion_confidence.py']})
@@ -256,8 +262,9 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('phase',choices=['prepare','integrate','extract'])
     parser.add_argument('--sequence',choices=SEQUENCES,required=True)
-    parser.add_argument('--work',help='Isolated output root; default outputs/SEQ/stage8_fusion_v2')
-    parser.add_argument('--poses',help='Raw TUM/OpenVINS export; defaults to raw pose+covariance file')
+    parser.add_argument('--work',help='Isolated output root; default outputs/SEQ/stage8_fusion_v2_vins_fusion')
+    parser.add_argument('--vio-backend',choices=['vins-fusion','openvins'],default='vins-fusion')
+    parser.add_argument('--poses',help='Override native T_WI TUM trajectory; seconds, xyz, xyzw')
     parser.add_argument('--variant',choices=['uniform','spatial','temporal','surfel_uniform','surfel_temporal'],default='temporal')
     parser.add_argument('--zmin',type=float,default=.2); parser.add_argument('--zmax',type=float,default=4.)
     parser.add_argument('--voxel',type=float,default=.03); parser.add_argument('--trunc',type=float,default=.12)

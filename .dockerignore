@@ -1,0 +1,12 @@
+.git
+.agents
+.codex
+data
+outputs
+report
+reports
+vicon_room1
+IGEV-plusplus
+vins_fusion/upstream
+vins_fusion/upstream-src.tar
+**/__pycache__

@@ -1,0 +1,5 @@
+FROM depth-vio-vins-fusion:be55a937
+COPY vins_fusion /integration
+RUN python3 /integration/apply_depth_patch.py /catkin_ws/src/VINS-Fusion
+RUN /bin/bash -c 'source /opt/ros/melodic/setup.bash && cd /catkin_ws && catkin build -j2 vins'
+RUN g++ -std=c++11 -O2 -I/usr/include/eigen3 /integration/depth/test_depth_factor.cpp -lceres -lglog -o /integration/test_depth_factor && /integration/test_depth_factor

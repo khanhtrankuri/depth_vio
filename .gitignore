@@ -3,6 +3,8 @@
 /vicon_room1/
 /outputs/
 /report/
+/vins_fusion/upstream/
+/vins_fusion/upstream-src.tar
 **/pretrained_models/
 *.bag
 *.zip
@@ -38,3 +40,7 @@ __pycache__/
 .aws/
 .codex/
 .agents/
+
+# Explicit deliverables from the validated latest run.
+!/reports/artifacts/latest/trajectory.tum
+!/reports/artifacts/latest/point_cloud.ply

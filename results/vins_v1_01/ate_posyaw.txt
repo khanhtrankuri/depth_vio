@@ -1,0 +1,29 @@
+Setting printing level to: INFO
+======================================
+Absolute Trajectory Error
+======================================
+rmse_ori = 5.807 | rmse_pos = 0.119
+mean_ori = 5.782 | mean_pos = 0.114
+min_ori  = 4.362 | min_pos  = 0.015
+max_ori  = 11.723 | max_pos  = 0.175
+std_ori  = 0.531 | std_pos  = 0.036
+======================================
+Relative Pose Error
+======================================
+seg 8 - median_ori = 3.500 | median_pos = 0.292 (1235 samples)
+seg 16 - median_ori = 2.560 | median_pos = 0.249 (1084 samples)
+seg 24 - median_ori = 2.415 | median_pos = 0.325 (950 samples)
+seg 32 - median_ori = 2.441 | median_pos = 0.268 (754 samples)
+seg 40 - median_ori = 3.028 | median_pos = 0.287 (592 samples)
+sys:1: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
+sys:1: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
+[TRAJ]: Normalized Estimation Error Squared called but trajectory does not have any covariances...
+[TRAJ]: Did you record using a Odometry or PoseWithCovarianceStamped????
+======================================
+Normalized Estimation Error Squared
+======================================
+mean_ori = 0.000 | mean_pos = 0.000
+min_ori  = 0.000 | min_pos  = 0.000
+max_ori  = 0.000 | max_pos  = 0.000
+std_ori  = 0.000 | std_pos  = 0.000
+======================================

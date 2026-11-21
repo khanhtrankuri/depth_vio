@@ -1,109 +1,69 @@
-# depth_vio — StereoFuse-VIO
+# VIO on Windows 11: WSL2 + Ubuntu 22.04 + ROS2 Humble + OpenVINS
 
-Offline stereo-depth + visual-inertial mapping experiments on EuRoC MAV.
-The current pipeline combines pretrained IGEV++, VINS-Fusion and two mapping backends:
-frustum-bounded TSDF and frame-supported voxel surfels.
+## Real-time learned depth in VINS-Fusion
+A GPU stereo network (RT-IGEV, CUDA-graph replay, 20 Hz, 38 ms latency) feeds live depth factors into
+VINS-Fusion ROS2. On EuRoC V1_01/02/03 at real-time playback it lowers mean ATE from 11.09 cm to 9.37 cm
+(−15.5%), better on every sequence. Design, measurements and how to reproduce: [realtime/README.md](realtime/README.md).
 
-The measured balanced preset uses uniform surfel fusion, 3cm voxels, six input
-keyframes of support and small-component filtering. It exports a point surface,
-not a watertight mesh. Spatial/temporal confidence proxies remain experimental:
-their development ablations did not improve F1 and they are disabled in the preset.
+## Layout
+| Where | What |
+|---|---|
+| WSL distro `Ubuntu-22.04` (user `vio`, passwordless sudo) | ROS2 Humble, OpenVINS workspace `~/ws_ov` (RelWithDebInfo), bag converter venv `~/venv_bag` |
+| `~/vio_data/{bags,configs,results,logs}` (inside WSL) | Data and logs. Keep bags on the WSL ext4 disk, not `/mnt/c` (much faster). |
+| `scripts/` (this repo) | All helper scripts. The `docker-desktop` distro is never touched. |
 
-## Latest depth-assisted run
+## After a reboot
+Nothing needs starting by hand: WSL boots on first use. From PowerShell in this folder:
 
-The selected V1_01 configuration uses IGEV++ depth directly in VINS-Fusion with
-information weight 4 and depth at 1 Hz, followed by balanced surfel mapping.
-See [the latest run](reports/latest_run.md) for measured ATE/RPE, trajectory and 3D point cloud.
-
-```sh
-python pipeline/run_tuned_pipeline.py
+```powershell
+.\scripts\vio.ps1 check                 # PASS/FAIL table of the environment
+.\scripts\vio.ps1 rviz                  # RViz2 appears on the Windows desktop (WSLg)
+.\scripts\vio.ps1 run euroc_mav         # OpenVINS (config name or full path to estimator_config.yaml)
+.\scripts\vio.ps1 play ~/vio_data/bags/<bag_dir> 1.0   # play a ROS2 bag
+.\scripts\vio.ps1 stop                  # graceful stop (SIGINT, then SIGKILL stragglers)
 ```
+Start order: `rviz` -> `run` -> `play` (each in its own terminal), so no early IMU/camera data is lost.
+Inside WSL the same scripts are `scripts/run_rviz.sh`, `run_openvins.sh`, `play_bag.sh`, `check_output.sh`, `stop_all.sh`.
+If RViz2 misbehaves on the GPU path, set `VIO_SOFTWARE_GL=1`.
 
-This uses existing disparity inputs and a frozen baseline reference. Outputs go to
-`outputs/V1_01_easy/latest/`; an existing completed run is refused. The selected
-settings are in `vins_fusion/tuned_config.json`. They were tuned on V1_01 and have
-not been independently validated on another sequence. See the latest report for
-input prerequisites and depth-image build instructions. Old generated run folders
-and HTML reports have been cleaned; reports 01–10 retain historical measurements.
+## Bags
+1. ROS1 `.bag` -> ROS2: `scripts/convert_bag.sh in.bag` (uses `rosbags`, no ROS1 needed).
+2. Inspect before running: `~/venv_bag/bin/python scripts/inspect_bag.py <bag> [--cam0 .. --cam1 .. --imu ..]`.
+   Reports encoding, size, rate, timestamp monotonicity, stereo sync and whether an IMU topic exists.
+3. Without an IMU topic only stereo **VO** is possible. Do not call it VIO.
 
-## Get the source
-
-```sh
-git clone --recurse-submodules <this-repository-url>
+## ATE / drift evaluation (EuRoC with ground truth)
+```bash
+# headless run + record poseimu + ov_eval ATE/RPE (inside WSL)
+bash scripts/eval_ate.sh ~/vio_data/bags/V1_01_easy_ros2 euroc_mav <.../mav0/state_groundtruth_estimate0/data.csv> <run_name>
+bash scripts/ate_only.sh ~/vio_data/results/<run_name>     # recompute metrics without re-running
+~/venv_bag/bin/python scripts/plot_traj.py gt.txt est.txt out.png   # per-axis error + trajectory plot
+~/venv_bag/bin/python scripts/diag_orientation.py gt.txt est.txt    # independent ATE + constant body-offset check
 ```
+`error_singlerun` opens matplotlib windows that block the shell; `ate_only.sh` sets `MPLBACKEND=Agg`.
+First result: `results/v1_01_stereo_vio/` (V1_01_easy, stereo VIO, position ATE RMSE 6.5 cm).
 
-IGEV++ is pinned as a submodule to upstream commit
-`099dec97989780d151700459c682df1cc2c18e88`. Its license and attribution remain in
-that submodule. VINS-Fusion is built from official commit
-`be55a937a57436548ddfb1bd324bc1e9a9e828e0` by
-[`vins_fusion/Dockerfile`](vins_fusion/Dockerfile). No pretrained weights are redistributed.
-Historical OpenVINS code and measurements are retained for comparison; they are
-not measurements of VINS-Fusion.
-
-## Run VINS-Fusion
-
-With Docker Desktop running Linux containers and EuRoC ASL data in `data/<sequence>/`:
-
-```sh
-python pipeline/run_vins_fusion.py --sequence V1_01_easy --build
+## VINS-Fusion on ROS2 Humble
+Port used: [fanhong-li/VINS-Fusion-ROS2-Humble](https://github.com/fanhong-li/VINS-Fusion-ROS2-Humble) (CPU mode, `GPU_MODE 0`).
+It needs Ceres >= 2.1 (`ceres::CUDA` enum), so Ceres 2.1.0 is built privately in `~/opt/ceres-2.1.0` (system Ceres 2.0 untouched).
+```bash
+bash scripts/03a_build_ceres_2_1.sh && bash scripts/03_build_vins_fusion.sh      # workspace ~/ws_vins
+bash scripts/prep_vins_euroc_cfg.sh <run_name>                                   # config copy with output paths
+bash scripts/eval_vins.sh <bag_dir> ~/vio_data/configs/vins_euroc/euroc_stereo_imu_config.yaml <gt.csv> <run_name>
+bash scripts/vins_report.sh ~/vio_data/results/<run_name>                        # independent checks + plot + log stats
 ```
+Note: the port's own `vio.csv` truncates timestamps to whole seconds, so trajectories are recorded from the `/odometry` topic.
 
-This builds ROS Melodic/VINS-Fusion, converts ASL images/IMU into a ROS bag,
-runs stereo + IMU odometry, and exports native IMU poses to
-`outputs/V1_01_easy/stage7_vins_fusion/vins_fusion_traj_tum.txt`.
-See [`vins_fusion/README.md`](vins_fusion/README.md) for conventions and scope.
+## Jetson thermal stereo bags (`/cam0/image_thermal`, `/cam1/image_thermal`)
+Create `~/vio_data/configs/jetson/` with `estimator_config.yaml`, `kalibr_imu_chain.yaml`, `kalibr_imucam_chain.yaml`
+(copy the layout of `~/ws_ov/src/open_vins/config/euroc_mav`). Set the topics to the real ones. The camera
+intrinsics/extrinsics must come from your own calibration, not guessed values. The 8-bit mono thermal images are
+handled as `mono8`; check `inspect_bag.py` output for the true encoding.
 
-An opt-in extension now feeds cached IGEV++ depth directly into VINS-Fusion's
-pose optimizer, with a paired depth-off/depth-on ATE/RPE benchmark. See
-[`vins_fusion/DEPTH_INTEGRATION.md`](vins_fusion/DEPTH_INTEGRATION.md).
+## Debugging C++ in VS Code
+Built with `-DCMAKE_BUILD_TYPE=RelWithDebInfo` and `compile_commands.json`. Open the WSL folder `~/ws_ov` with the
+VS Code "WSL" extension and attach gdb to `run_subscribe_msckf`. For stepping through code use a Debug build:
+`colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug --packages-select ov_core ov_init ov_msckf`.
 
-## Run the balanced mapper
-
-Requirements: NumPy, SciPy and PyYAML; Pillow for preparation; PyTorch/CUDA for
-integration; scikit-image for TSDF mesh extraction. A complete environment can
-run every phase, or separate CPU/GPU interpreters can be supplied.
-
-The mapper consumes existing EuRoC calibration/images, IGEV++ disparity caches
-and raw VINS-Fusion trajectories at the paths described in
-[`pipeline/FUSION_V2.md`](pipeline/FUSION_V2.md). It does not download data/models.
-
-```sh
-python pipeline/run_balanced_fusion.py --sequence V1_01_easy
-```
-
-Optional: `--cpu-python`, `--gpu-python`, `--work`, and explicit `--rebuild` when
-prepared-cache fingerprints change. Balanced outputs are written to
-`outputs/<sequence>/stage8_fusion_balanced_vins_fusion/`; historical outputs are preserved.
-Use `--vio-backend openvins` explicitly to reproduce the old mapper inputs.
-
-```sh
-python -m unittest discover -s pipeline/tests -v
-```
-
-## Results and limitations
-
-The existing results below were measured with **OpenVINS**, before the VINS-Fusion
-integration. They must not be attributed to VINS-Fusion. See the
-[architecture improvement report](reports/08_fusion_architecture_improvement.md)
-for measured accuracy, precision/recall/F1, timings and ablations. The preset was
-selected on V1_01 before evaluating V1_02/V1_03. The three sequences share a scene.
-Reference registration is evaluation-only; the mapper works in native VIO coordinates.
-No calibrated-uncertainty, novel-method, universal-best or end-to-end 20FPS claim is made.
-
-![Quality comparison](reports/figures/fusion_v2_quality.png)
-
-The [audit index](reports/README.md) covers source evidence, calibration, reference
-validity, reproducibility and research limitations. Compact metric/configuration
-JSONs and figures are included. The latest trajectory and point cloud are also included.
-Datasets, weights, large caches,
-meshes, logs and generated HTML reports remain local and are ignored by Git.
-Artifact-dependent checks require those local inputs; a source clone alone is
-not a complete dataset/model distribution.
-
-To generate the comparison page after reproducing the experiment artifacts:
-
-```sh
-python reports/scripts/report_fusion_v2.py
-```
-
-The page is written to `report/fusion_v2_comparison.html`.
+## Rebuild from scratch
+`scripts/01_install_ros2_humble.sh` then `scripts/02_build_openvins.sh` (both idempotent).

@@ -1,0 +1,93 @@
+{
+  "frames": 60,
+  "seqs": [
+    "V1_02_medium",
+    "V1_03_difficult"
+  ],
+  "results": {
+    "rt:sceneflow:4": {
+      "infer_ms": 31.787240733331146,
+      "pipeline_ms_median": 32.64023349998979,
+      "feat_absrel_median": 0.01993430033326149,
+      "feat_absrel_mean": 0.07682883739471436,
+      "feat_within_5pct": 0.7623493975903615,
+      "feat_outlier_15pct": 0.11746987951807229,
+      "feat_coverage": 0.7448956697330043,
+      "dense_absrel_median": 0.019676391035318375,
+      "dense_within_5pct": 0.7685980633301828,
+      "gpu_mem_mb": 260.59033203125
+    },
+    "rt:sceneflow:6": {
+      "infer_ms": 38.525040233332675,
+      "pipeline_ms_median": 39.349199500009036,
+      "feat_absrel_median": 0.019897498190402985,
+      "feat_absrel_mean": 0.0765077993273735,
+      "feat_within_5pct": 0.7655027092113185,
+      "feat_outlier_15pct": 0.11679711017459361,
+      "feat_coverage": 0.7453444020641687,
+      "dense_absrel_median": 0.019202392548322678,
+      "dense_within_5pct": 0.7764103147384456,
+      "gpu_mem_mb": 273.38330078125
+    },
+    "rt:sceneflow:12": {
+      "infer_ms": 57.724941466665314,
+      "pipeline_ms_median": 59.2670265000379,
+      "feat_absrel_median": 0.01960308849811554,
+      "feat_absrel_mean": 0.07558243721723557,
+      "feat_within_5pct": 0.7723846849562858,
+      "feat_outlier_15pct": 0.11395839614109135,
+      "feat_coverage": 0.7442225712362576,
+      "dense_absrel_median": 0.01837170124053955,
+      "dense_within_5pct": 0.7916909523333616,
+      "gpu_mem_mb": 273.77294921875
+    },
+    "rt:kitti:6": {
+      "infer_ms": 37.56113593333339,
+      "pipeline_ms_median": 39.09804449995136,
+      "feat_absrel_median": 0.027764752507209778,
+      "feat_absrel_mean": 0.07675865292549133,
+      "feat_within_5pct": 0.7244655581947743,
+      "feat_outlier_15pct": 0.12707838479809977,
+      "feat_coverage": 0.7556652456809513,
+      "dense_absrel_median": 0.02815236710011959,
+      "dense_within_5pct": 0.7203059380420843,
+      "gpu_mem_mb": 273.38330078125
+    },
+    "pp:eth3d:8": {
+      "infer_ms": 199.91083123333433,
+      "pipeline_ms_median": 210.4398245000425,
+      "feat_absrel_median": 0.01838931255042553,
+      "feat_absrel_mean": 0.07064922153949738,
+      "feat_within_5pct": 0.787996416840848,
+      "feat_outlier_15pct": 0.11555688265153777,
+      "feat_coverage": 0.7514022885348889,
+      "dense_absrel_median": 0.016681713983416557,
+      "dense_within_5pct": 0.8278851452297692,
+      "gpu_mem_mb": 731.78955078125
+    },
+    "pp:sceneflow:8": {
+      "infer_ms": 197.5228030999991,
+      "pipeline_ms_median": 206.41560799998615,
+      "feat_absrel_median": 0.01807326078414917,
+      "feat_absrel_mean": 0.07450632750988007,
+      "feat_within_5pct": 0.7761013880506941,
+      "feat_outlier_15pct": 0.11436330718165359,
+      "feat_coverage": 0.7435494727395109,
+      "dense_absrel_median": 0.017160911113023758,
+      "dense_within_5pct": 0.8062317662097805,
+      "gpu_mem_mb": 730.98193359375
+    },
+    "pp:middlebury:8": {
+      "infer_ms": 197.01654846666466,
+      "pipeline_ms_median": 207.1237290000454,
+      "feat_absrel_median": 0.017861593514680862,
+      "feat_absrel_mean": 0.07250871509313583,
+      "feat_within_5pct": 0.7870813397129187,
+      "feat_outlier_15pct": 0.11064593301435406,
+      "feat_coverage": 0.7502804577069778,
+      "dense_absrel_median": 0.016443366184830666,
+      "dense_within_5pct": 0.8267192133034473,
+      "gpu_mem_mb": 731.04638671875
+    }
+  }
+}

@@ -1,0 +1,13 @@
+
+# ---- live learned depth (realtime/depth_node/depth_node_trt.py, TensorRT on Jetson) ----------------
+# Append to the thermal VINS config. Remove depth_topic to get the unmodified VINS-Fusion behaviour.
+depth_topic: "/depth/inverse_depth"
+depth_weight: 16          # information multiplier on the depth proxy sigma
+depth_period: 0.12        # min spacing of depth frames; the TRT node delivers one every 133/200 ms (~6.6 Hz) on Orin NX
+depth_wait_ms: 180        # only frames the depth node has started are waited for (request/pending protocol)
+depth_max_rel_range: 0.08 # 3x3 smoothness gate (rejects depth discontinuities)
+depth_init_landmarks: 1   # initialise non-stereo landmarks from learned depth
+depth_start_dist: 0.5     # depth only after the initialised estimator has moved this far (take-off guard)
+depth_start_delay: 1.0    # ... and then this many seconds more
+depth_gate: 0.1           # skip a depth factor if it disagrees >10% with the current estimate
+depth_keep_stereo: 0      # 1 = keep the right-camera factor next to depth

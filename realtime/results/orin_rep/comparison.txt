@@ -1,0 +1,14 @@
+common window: 110.0 s (latest start 1794357545.48, earliest end 1794357655.46)
+first pose per run: base_r0 +24.5 s, base_r1 +0.0 s, base_r2 +0.0 s, depth_r0 +0.0 s, depth_r1 +0.0 s, depth_r2 +0.0 s
+
+run                 path m end-start m   XY m     Z m  drift % depth Hz missed  lag ms solver ms fail
+base_r0              43.56       0.892  0.571  +0.685     2.05      nan      0      15      19.4    0
+base_r1              43.31       0.895  0.560  +0.698     2.07      nan      0      20      19.2    0
+base_r2              43.41       0.888  0.557  +0.691     2.04      nan      0      20      19.2    0
+depth_r0             44.25       0.770  0.403  +0.656     1.74      5.9      0     137      33.0    0
+depth_r1             43.84       0.784  0.437  +0.651     1.79      5.9      0     136      32.0    0
+depth_r2             44.07       0.945  0.619  +0.714     2.14      5.9      0     134      29.8    0
+
+mean +- std per variant (n runs)
+  base           n=3  drift 2.05 +- 0.01 %   XY 0.562 +- 0.008 m   Z +0.692 +- 0.007 m   path 43.43 m
+  depth          n=3  drift 1.89 +- 0.22 %   XY 0.486 +- 0.116 m   Z +0.673 +- 0.035 m   path 44.05 m

@@ -1,0 +1,125 @@
+%YAML:1.0
+# Calibration: calib_1_11_2026/lan_2/CalibIMU_CAMIntrinsiccamcam_1_11 (Kalibr IMU-cam, bag test_trigger_30Hz_camimu_1_11_ros1) (Kalibr, pinhole-radtan; body_T_camX = inverse(T_cam_imu))
+
+#common parameters
+#support: 1 imu 1 cam; 1 imu 2 cam: 2 cam;
+imu: 1
+num_of_cam: 2
+
+imu_topic: "/gimbal_imu"
+sensor_qos_best_effort: 0     # ROS 2: 1 neu driver camera/IMU publish voi SensorDataQoS (best effort)
+image0_topic: "/cam0/image_thermal"
+image1_topic: "/cam1/image_thermal"
+stereo_sync_tolerance: 0.008   # 2 camera nhiet lech ~3ms; mac dinh VINS la 0.003
+output_path: "/home/lantl/Desktop/lantl/VINS-Fusion/OutSideHanhLangDefaultIMUVINSFUSION_Cauchy/"
+
+cam0_calib: "cam0_pinhole.yaml"
+cam1_calib: "cam1_pinhole.yaml"
+image_width: 640
+image_height: 512
+
+# Extrinsic parameter between IMU and Camera.
+# body_T_camX = T_ic (cam -> imu) = inverse(T_cam_imu) trong calib_1_11_2026/lan_2/CalibIMU_CAMIntrinsiccamcam_1_11/test_trigger_30Hz_camimu_1_11_ros1-camchain-imucam.yaml
+estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+                        # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
+
+body_T_cam0: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: d
+   data: [-0.00515526, 0.00268129, 0.99998312,   0.02266164,
+           -0.99926652, 0.03793193, -0.00525327, 0.07336084,
+           -0.03794538, -0.99927673, 0.00248377, -0.01010019,
+           0.0, 0.0, 0.0, 1.0]
+
+body_T_cam1: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: d
+   data: [  0.00380301,    0.01666038, 0.99985397, 0.02326168,
+           -0.99952785, -0.03042213, 0.00430868, -0.04934654,
+           0.03048947,  -0.99939828, 0.01653682, -0.00943744,
+           0.0, 0.0, 0.0, 1.0]
+
+#Multiple thread support
+multiple_thread: 1
+
+#feature traker paprameters
+max_cnt: 150
+min_dist: 15            # min distance between two features
+freq: 10
+F_threshold: 1.0        # ransac threshold (pixel)
+show_track: 0
+flow_back: 1            # perform forward and backward optical flow to improve feature tracking accuracy
+
+#optimization parameters
+max_solver_time: 0.04  # max solver itration time (ms), to guarantee real time
+max_num_iterations: 8   # max solver itrations, to guarantee real time
+keyframe_parallax: 10.0 # keyframe selection threshold (pixel)
+
+
+
+# acc_n: 0.00895429          # accelerometer measurement noise standard deviation.
+# gyr_n: 0.000865811         # gyroscope measurement noise standard deviation.
+# acc_w: 0.00129602        # accelerometer bias random work noise standard deviation.
+# gyr_w: 5.2e-05       # gyroscope bias random work noise standard deviation.
+# do VINS_FUSION nhan nhieu roi rac nen phai nhan voi sqrt(tan so)
+# acc_n: 0.125986          # accelerometer measurement noise standard deviation.
+# gyr_n: 0.0122444         # gyroscope measurement noise standard deviation.
+# acc_w: 0.0183285        # accelerometer bias random work noise standard deviation.
+# gyr_w: 0.000735515       # gyroscope bias random work noise standard deviation.
+# g_norm: 9.80655       # |gravity| Kalibr uoc luong = 9.8065
+
+# bo default cua VINS_FUSION
+acc_n: 0.1          # accelerometer measurement noise standard deviation. 
+gyr_n: 0.01         # gyroscope measurement noise standard deviation.     
+acc_w: 0.001        # accelerometer bias random work noise standard deviation.  
+gyr_w: 0.0001       # gyroscope bias random work noise standard deviation.     
+g_norm: 9.81007     # gravity magnitude
+
+#unsynchronization parameters
+# Kalibr lan_2/CalibIMU_CAMIntrinsiccamcam_1_11: t_imu = t_cam + timeshift_cam_imu (-0.00072 cam0, -0.00097 cam1) -> cung quy uoc voi VINS td
+estimate_td: 0                      # online estimate time offset between camera and imu
+td: 0.0   # live depth requires td=0 (Kalibr value was -0.00116)
+
+#loop closure parameters
+load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
+pose_graph_save_path: "/home/lantl/Desktop/lantl/VINS-Fusion/OutSideHanhLangDefaultIMUVINSFUSION_Cauchy/pose_graph/" # save and load path
+save_image: 0                   # save image in pose graph for visualization prupose; you can close this function by setting 0
+
+#debug logs (same files as ARTI-VIO, written to <output_path>/debug; summary in <output_path>/run_summary.txt)
+outlier_reproj_px: 3.0             # reprojection outlier threshold (px), VINS default 3
+save_state_log: 1                  # debug/state_log.csv: P, V, biases, IMU vs vision, one row per frame
+save_optim_input_log: 1            # debug/optim_input_log.csv + debug/low_feature/run_*/*.png
+save_feature_log: 0                # optional heavy per-feature CSV; set 0 to reduce logging overhead
+save_opt_feature_metrics: 1        # lightweight per-optimization feature/factor counts
+save_topic_log: 1                  # diagnostic: image / imu callback and stereo sync timing
+save_init_log: 0                   # startup IMU and Ceres diagnostics; turn off after validation
+# Protect against sparse IMU history when replay begins (200 Hz -> ~100 samples in 0.5s).
+init_imu_window_s: 0.50
+init_imu_min_samples: 80
+init_imu_max_gap_s: 0.030          # reject >30 ms gaps within startup IMU window
+# Set to 1 only if the bag contains stationary periods; it will otherwise
+# keep skipping image frames until the IMU looks stationary.
+init_imu_require_stationary: 0
+init_imu_max_acc_std: 0.40         # m/s^2 RMS deviation within startup window
+init_imu_max_gyro_rms: 0.20        # rad/s RMS within startup window
+# Automatic resets require state recovery; keep off until initial runs verified.
+enable_failure_detection: 0
+print_extrinsic: 0                  # terminal: [EXTRINSIC] body_T_camX after every optimization (needs imu: 1, estimate_extrinsic: 1)
+low_feature_thr: 300                # dump stereo image when usable features in the frame < this
+low_feature_max_dumps: 300000
+low_feature_dump_per_episode: 0
+
+# ---- live learned depth (realtime/depth_node/depth_node_trt.py, TensorRT on Jetson) ----------------
+# Append to the thermal VINS config. Remove depth_topic to get the unmodified VINS-Fusion behaviour.
+depth_topic: "/depth/inverse_depth"
+depth_weight: 16          # information multiplier on the depth proxy sigma
+depth_period: 0.12
+depth_wait_ms: 180        # Orin NX: network ~116 ms + rectify/convert -> depth arrives ~130-150 ms after exposure
+depth_max_rel_range: 0.08 # 3x3 smoothness gate (rejects depth discontinuities)
+depth_init_landmarks: 1   # initialise non-stereo landmarks from learned depth
+depth_start_dist: 0.5     # depth only after the initialised estimator has moved this far (take-off guard)
+depth_start_delay: 1.0    # ... and then this many seconds more
+depth_gate: 0.1           # skip a depth factor if it disagrees >10% with the current estimate
+depth_keep_stereo: 0      # 1 = keep the right-camera factor next to depth

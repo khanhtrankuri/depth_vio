@@ -1,0 +1,41 @@
+=== base_r0
+  !! vins.log contains "terminate called" x1
+  depth in VINS: disabled (no depth_topic)
+  VINS solver: 1627 windows, median 19.4 ms, p95 35.5 ms, max 53.5 ms
+  pose lag above minimum: median 15 ms, p95 36 ms, first 10% 25 ms -> last 10% 11 ms
+  trajectory: 1628 poses, 110.0 s, path 43.56 m, start-end 0.892 m (XY 0.571, Z +0.685) = 2.05 % of path
+=== base_r1
+  !! vins.log contains "terminate called" x1
+  depth in VINS: disabled (no depth_topic)
+  VINS solver: 1989 windows, median 19.2 ms, p95 34.0 ms, max 45.8 ms
+  pose lag above minimum: median 20 ms, p95 39 ms, first 10% 7 ms -> last 10% 12 ms
+  trajectory: 1990 poses, 134.5 s, path 43.41 m, start-end 0.912 m (XY 0.587, Z +0.699) = 2.10 % of path
+=== base_r2
+  !! vins.log contains "terminate called" x1
+  depth in VINS: disabled (no depth_topic)
+  VINS solver: 1989 windows, median 19.2 ms, p95 33.9 ms, max 45.8 ms
+  pose lag above minimum: median 20 ms, p95 40 ms, first 10% 9 ms -> last 10% 12 ms
+  trajectory: 1990 poses, 134.5 s, path 43.50 m, start-end 0.903 m (XY 0.579, Z +0.693) = 2.08 % of path
+=== depth_r0
+  !! vins.log contains "terminate called" x1
+  depth in VINS: 580 frames with depth over 98.6 s (~5.9 Hz), features accepted per frame median 90 (p5 59)
+                 depth images received=810 used=580 missed=0 skipped=303 (missed = waited, depth never arrived; skipped = not computed, no wait)
+  VINS solver: 1989 windows, median 33.0 ms, p95 50.2 ms, max 56.4 ms
+  pose lag above minimum: median 137 ms, p95 181 ms, first 10% 18 ms -> last 10% 164 ms
+  trajectory: 1990 poses, 134.5 s, path 44.33 m, start-end 0.781 m (XY 0.419, Z +0.659) = 1.76 % of path
+=== depth_r1
+  !! vins.log contains "terminate called" x1
+  depth in VINS: 587 frames with depth over 98.8 s (~5.9 Hz), features accepted per frame median 91 (p5 61)
+                 depth images received=799 used=587 missed=0 skipped=290 (missed = waited, depth never arrived; skipped = not computed, no wait)
+  VINS solver: 1989 windows, median 32.0 ms, p95 50.1 ms, max 56.4 ms
+  depth node: 799 frames, compute median 130.3 ms (p95 134.6), net 122.1 ms, latency median 137.1 ms (p95 143.7), valid 0.81  received=3968 dropped=3916 model=rtigev_i6_512x640_fp16.engine (TensorRT, cuda_graph=True)
+  pose lag above minimum: median 136 ms, p95 181 ms, first 10% 16 ms -> last 10% 160 ms
+  trajectory: 1990 poses, 134.5 s, path 43.93 m, start-end 0.796 m (XY 0.456, Z +0.653) = 1.81 % of path
+=== depth_r2
+  !! vins.log contains "terminate called" x1
+  depth in VINS: 583 frames with depth over 98.6 s (~5.9 Hz), features accepted per frame median 91 (p5 59)
+                 depth images received=803 used=583 missed=0 skipped=297 (missed = waited, depth never arrived; skipped = not computed, no wait)
+  VINS solver: 1989 windows, median 29.8 ms, p95 50.2 ms, max 56.8 ms
+  depth node: 803 frames, compute median 130.5 ms (p95 135.2), net 122.2 ms, latency median 137.1 ms (p95 143.0), valid 0.82  received=4000 dropped=3956 model=rtigev_i6_512x640_fp16.engine (TensorRT, cuda_graph=True)
+  pose lag above minimum: median 134 ms, p95 180 ms, first 10% 17 ms -> last 10% 154 ms
+  trajectory: 1990 poses, 134.5 s, path 44.15 m, start-end 0.953 m (XY 0.629, Z +0.716) = 2.16 % of path

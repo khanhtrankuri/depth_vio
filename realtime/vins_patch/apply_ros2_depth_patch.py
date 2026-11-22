@@ -116,9 +116,14 @@ def apply(repo):
             else
                 observation.igev_inverse_depth = 0.;
         }
-        ROS_INFO("LIVE_DEPTH_OBS t=%.9f accepted=%d received=%lld used=%lld missed=%lld", header, accepted,
-                 depth.received.load(), depth.used, depth.missed);
+        ROS_INFO("LIVE_DEPTH_OBS t=%.9f accepted=%d received=%lld used=%lld missed=%lld skipped=%lld", header, accepted,
+                 depth.received.load(), depth.used, depth.missed, depth.skipped);
     }''')
+    s = replace(s, 'void Estimator::inputImage(double t, const cv::Mat &_img, const cv::Mat &_img1)\n{\n    inputImageCnt++;\n',
+                'void Estimator::inputImage(double t, const cv::Mat &_img, const cv::Mat &_img1)\n{\n    inputImageCnt++;\n'
+                '    // announce frames the backend will process, so the depth node computes exactly those\n'
+                '    if (depth.enabled && depth.on_backend_frame && (!MULTIPLE_THREAD || inputImageCnt % 2 == 0))\n'
+                '        depth.on_backend_frame(t);\n')
     prefix, rest = s.split('void Estimator::optimization()', 1)
     body, suffix = rest.split('void Estimator::slideWindow()', 1)
     body = replace(body, '    int f_m_cnt = 0;', '    int depth_factor_count = 0;\n    int f_m_cnt = 0;')
@@ -176,6 +181,7 @@ def apply(repo):
 
     # ---- ROS node: subscribe to the depth topic ------------------------------------------
     p = src / 'rosNodeTest.cpp'; s = p.read_text()
+    s = replace(s, '#include "utility/visualization.h"', '#include "utility/visualization.h"\n#include <std_msgs/msg/header.hpp>\n#include <cmath>')
     s = replace(s, 'void imu_callback(', '''void depth_callback(const sensor_msgs::msg::Image::SharedPtr msg)
 {
     if (msg->encoding != "32FC2" || msg->is_bigendian) {
@@ -187,10 +193,30 @@ def apply(repo):
         ROS_WARN("invalid depth image dimensions, stride or payload size");
 }
 
+rclcpp::Publisher<std_msgs::msg::Header>::SharedPtr pub_depth_request;
+
+void depth_pending_callback(const std_msgs::msg::Header::SharedPtr msg)
+{
+    estimator.depth.mark_pending((long long)msg->stamp.sec * 1000000000LL + msg->stamp.nanosec);
+}
+
 void imu_callback(''')
     s = replace(s, '    std::thread sync_thread{sync_process};', '''    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr sub_depth = NULL;
     if (!DEPTH_TOPIC.empty())
         sub_depth = n->create_subscription<sensor_msgs::msg::Image>(DEPTH_TOPIC, rclcpp::QoS(rclcpp::KeepLast(20)), depth_callback);
+    rclcpp::Subscription<std_msgs::msg::Header>::SharedPtr sub_depth_pending = NULL;
+    if (!DEPTH_TOPIC.empty()) {
+        sub_depth_pending = n->create_subscription<std_msgs::msg::Header>(DEPTH_TOPIC + "/pending",
+            rclcpp::QoS(rclcpp::KeepLast(50)), depth_pending_callback);
+        pub_depth_request = n->create_publisher<std_msgs::msg::Header>(DEPTH_TOPIC + "/request", rclcpp::QoS(rclcpp::KeepLast(50)));
+        estimator.depth.on_backend_frame = [](double t) {
+            long long ns = std::llround(t * 1e9);
+            std_msgs::msg::Header h;
+            h.stamp.sec = (int32_t)(ns / 1000000000LL);
+            h.stamp.nanosec = (uint32_t)(ns % 1000000000LL);
+            pub_depth_request->publish(h);
+        };
+    }
 
     std::thread sync_thread{sync_process};''')
     p.write_text(s)

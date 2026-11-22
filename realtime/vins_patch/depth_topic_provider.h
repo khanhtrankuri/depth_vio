@@ -12,10 +12,12 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <functional>
 #include <limits>
 #include <map>
 #include <memory>
 #include <mutex>
+#include <set>
 #include <vector>
 
 class DepthTopicProvider {
@@ -32,6 +34,23 @@ public:
     double max_rel_range = 0.08;// local smoothness gate (3x3 inverse-depth range / mean)
     std::atomic<long long> received{0};  // written by the ROS thread, read by the estimator
     long long used = 0, missed = 0;
+    long long skipped = 0;      // frames passed over because the depth node was not computing them
+    // Request/pending protocol (depth_node_trt.py). The estimator announces every frame its backend will process
+    // (on_backend_frame, set by the ROS node); the depth node announces the frame it has started computing
+    // (mark_pending). Once a pending announcement has been seen, load() waits only for frames that are being
+    // computed and skips the others immediately (without consuming depth_period), so the backend never waits
+    // for depth that will not come. Without announcements (older depth node) the original behaviour is kept.
+    std::function<void(double)> on_backend_frame;
+
+    void mark_pending(long long stamp_ns) {
+        {
+            std::lock_guard<std::mutex> lock(m_);
+            pending_.insert(stamp_ns);
+            pending_seen_ = true;
+            while (pending_.size() > 64) pending_.erase(pending_.begin());
+        }
+        cv_.notify_all();
+    }
 
     void configure(bool on, double weight, double period, double wait_ms, double rel_range) {
         enabled = on;
@@ -86,12 +105,23 @@ public:
         };
         auto newer_exists = [&]() { return !frames_.empty() && frames_.rbegin()->first > query + 1000; };
         std::shared_ptr<Frame> f = find();
-        if (!f && !newer_exists()) {
+        if (!f && pending_seen_) {
+            auto pit = pending_.lower_bound(query - 1000);
+            const bool computing = pit != pending_.end() && std::llabs(*pit - query) <= 1000;
+            if (!computing) {
+                pending_.erase(pending_.begin(), pending_.lower_bound(query - 1000));
+                frames_.erase(frames_.begin(), frames_.lower_bound(query - 1000));
+                ++skipped;
+                return false;  // try the next backend frame; depth_period is not consumed
+            }
+            cv_.wait_for(lock, std::chrono::duration<double>(wait_s), [&]() { f = find(); return bool(f); });
+        } else if (!f && !newer_exists()) {
             cv_.wait_for(lock, std::chrono::duration<double>(wait_s), [&]() { f = find(); return f || newer_exists(); });
             if (!f) f = find();
         }
         // Drop everything older than this exposure; it can never be used again.
         frames_.erase(frames_.begin(), frames_.lower_bound(query - 1000));
+        pending_.erase(pending_.begin(), pending_.upper_bound(query + 1000));
         if (!f) { ++missed; return false; }
         current_ = f;
         last_used_ = seconds;
@@ -122,6 +152,8 @@ private:
     std::mutex m_;
     std::condition_variable cv_;
     std::map<long long, std::shared_ptr<Frame>> frames_;
+    std::set<long long> pending_;
+    bool pending_seen_ = false;
     std::shared_ptr<Frame> current_;
     double last_used_ = -1;
     double first_ready_ = -1;

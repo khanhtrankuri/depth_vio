@@ -61,6 +61,26 @@ int main() {
     assert(!p.load((t0 + 3000000000LL) * 1e-9));
     double waited = std::chrono::duration<double>(std::chrono::steady_clock::now() - s).count();
     assert(waited > 0.04 && waited < 0.2);
-    std::printf("depth_topic_provider tests passed (used=%lld missed=%lld)\n", p.used, p.missed);
+    // ---- request/pending protocol ----
+    const long long used_before = p.used, missed_before = p.missed;
+    p.mark_pending(t0 + 4000000000LL);
+    // a frame that is not being computed is skipped at once, without waiting and without using the period
+    s = std::chrono::steady_clock::now();
+    assert(!p.load((t0 + 3900000000LL) * 1e-9));
+    waited = std::chrono::duration<double>(std::chrono::steady_clock::now() - s).count();
+    assert(waited < 0.01 && p.skipped == 1 && p.missed == missed_before);
+    // the frame being computed is waited for, and used
+    std::thread late2([&]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        push(t0 + 4000000000LL, a);
+    });
+    assert(p.load((t0 + 4000000000LL) * 1e-9));
+    late2.join();
+    assert(p.used == used_before + 1);
+    // computing but too late -> missed after wait_s
+    p.mark_pending(t0 + 5000000000LL);
+    assert(!p.load((t0 + 5000000000LL) * 1e-9));
+    assert(p.missed == missed_before + 1);
+    std::printf("depth_topic_provider tests passed (used=%lld missed=%lld skipped=%lld)\n", p.used, p.missed, p.skipped);
     return 0;
 }

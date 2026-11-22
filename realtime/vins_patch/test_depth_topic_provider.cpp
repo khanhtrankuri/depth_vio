@@ -16,7 +16,19 @@ int main() {
     p.configure(true, 4.0, 0.5, 50.0, 0.08);
     auto a = img(W, H, 0.5f, 0.01f);
     const long long t0 = 1403715536162142992LL;
-    p.push(t0, W, H, reinterpret_cast<uint8_t *>(a.data()), W * 8);
+    const size_t row_bytes = W * 2 * sizeof(float);
+    const size_t padded_step = row_bytes + 8;
+    std::vector<uint8_t> padded(H * padded_step);
+    for (uint32_t y = 0; y < H; ++y)
+        std::memcpy(padded.data() + y * padded_step, a.data() + size_t(y) * W * 2, row_bytes);
+    assert(!p.push(t0, W, H, padded.data(), row_bytes - 1, padded.size()));
+    assert(!p.push(t0, W, H, padded.data(), padded_step, padded.size() - 1));
+    assert(p.received.load() == 0);
+    assert(p.push(t0, W, H, padded.data(), padded_step, padded.size()));
+    auto push = [&](long long stamp, const std::vector<float> &pixels) {
+        assert(p.push(stamp, W, H, reinterpret_cast<const uint8_t *>(pixels.data()), row_bytes,
+                      pixels.size() * sizeof(float)));
+    };
     double inv, sig;
     // exact exposure match (double seconds loses ~100 ns: tolerance is 1 us)
     assert(p.load(t0 * 1e-9));
@@ -24,23 +36,23 @@ int main() {
     assert(std::abs(inv - 0.5) < 1e-6 && std::abs(sig - 0.005) < 1e-7);  // sigma scaled by 1/sqrt(4)
     assert(!p.sample(0, 10, inv, sig));                                     // border rejected
     // period gate: 0.1 s later is not selected even if depth exists
-    p.push(t0 + 100000000LL, W, H, reinterpret_cast<uint8_t *>(a.data()), W * 8);
+    push(t0 + 100000000LL, a);
     assert(!p.load((t0 + 100000000LL) * 1e-9));
     // missing frame with a newer one already present: no waiting, no stale reuse
-    p.push(t0 + 700000000LL, W, H, reinterpret_cast<uint8_t *>(a.data()), W * 8);
+    push(t0 + 700000000LL, a);
     assert(!p.load((t0 + 600000000LL) * 1e-9));
     assert(!p.sample(10, 10, inv, sig));
     // depth arriving while the estimator waits
     std::thread late([&]() {
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
-        p.push(t0 + 800000000LL, W, H, reinterpret_cast<uint8_t *>(a.data()), W * 8);
+        push(t0 + 800000000LL, a);
     });
     assert(p.load((t0 + 800000000LL) * 1e-9));
     late.join();
     // discontinuity rejected
     auto b = img(W, H, 0.5f, 0.01f);
     b[(size_t(10) * W + 11) * 2] = 1.0f;
-    p.push(t0 + 2000000000LL, W, H, reinterpret_cast<uint8_t *>(b.data()), W * 8);
+    push(t0 + 2000000000LL, b);
     assert(p.load((t0 + 2000000000LL) * 1e-9));
     assert(!p.sample(10, 10, inv, sig));
     assert(p.sample(20, 20, inv, sig));

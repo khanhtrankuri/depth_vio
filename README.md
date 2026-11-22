@@ -2,8 +2,8 @@
 
 ## Real-time learned depth in VINS-Fusion
 A GPU stereo network (RT-IGEV, CUDA-graph replay, 20 Hz, 38 ms latency) feeds live depth factors into
-VINS-Fusion ROS2. On EuRoC V1_01/02/03 at real-time playback it lowers mean ATE from 11.09 cm to 9.37 cm
-(−15.5%), better on every sequence. Design, measurements and how to reproduce: [realtime/README.md](realtime/README.md).
+VINS-Fusion ROS2. On EuRoC V1_01/02/03 at real-time playback it lowers mean ATE from 11.10 cm to 6.97 cm
+(−37%; −30% against VINS with the same 200-feature tracker), better on every sequence. Design, measurements and how to reproduce: [realtime/README.md](realtime/README.md).
 
 ## Layout
 | Where | What |

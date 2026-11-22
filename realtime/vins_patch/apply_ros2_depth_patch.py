@@ -9,7 +9,8 @@ Adds (all opt-in through the YAML key `depth_topic`; without it the estimator is
     and in marginalization. At observations with accepted depth the correlated right-camera reprojection
     factor is replaced by the depth factor.
   * Depth-based landmark initialisation for features that have no stereo match yet.
-  * Start delay after initialisation and a consistency gate (factor skipped if it disagrees with the estimate).
+  * Take-off guard (depth only after the estimator has moved depth_start_dist metres, then depth_start_delay s),
+    optional depth_keep_stereo, and a consistency gate (factor skipped if it disagrees with the estimate).
 Fails loudly if the upstream source does not match the expected anchors. Idempotent: refuses double patching.
 """
 from pathlib import Path
@@ -38,13 +39,13 @@ def apply(repo):
     # ---- parameters -------------------------------------------------------------------------
     p = src / 'estimator' / 'parameters.h'; s = p.read_text()
     s = replace(s, 'extern double TD;', 'extern double TD;\n'
-                'extern std::string DEPTH_TOPIC;\nextern double DEPTH_WEIGHT, DEPTH_PERIOD, DEPTH_WAIT_MS, DEPTH_MAX_REL_RANGE, DEPTH_START_DELAY, DEPTH_GATE;\n'
-                'extern int DEPTH_INIT_LANDMARKS;')
+                'extern std::string DEPTH_TOPIC;\nextern double DEPTH_WEIGHT, DEPTH_PERIOD, DEPTH_WAIT_MS, DEPTH_MAX_REL_RANGE, DEPTH_START_DELAY, DEPTH_GATE, DEPTH_START_DIST;\n'
+                'extern int DEPTH_INIT_LANDMARKS, DEPTH_KEEP_STEREO;')
     p.write_text(s)
     p = src / 'estimator' / 'parameters.cpp'; s = p.read_text()
     s = replace(s, 'double TD;', 'double TD;\n' + MARK + '\nstd::string DEPTH_TOPIC;\n'
-                'double DEPTH_WEIGHT = 16.0, DEPTH_PERIOD = 1.0, DEPTH_WAIT_MS = 80.0, DEPTH_MAX_REL_RANGE = 0.08, DEPTH_START_DELAY = 3.0, DEPTH_GATE = 0.1;\n'
-                'int DEPTH_INIT_LANDMARKS = 1;')
+                'double DEPTH_WEIGHT = 16.0, DEPTH_PERIOD = 0.2, DEPTH_WAIT_MS = 80.0, DEPTH_MAX_REL_RANGE = 0.08, DEPTH_START_DELAY = 1.0, DEPTH_GATE = 0.1, DEPTH_START_DIST = 0.5;\n'
+                'int DEPTH_INIT_LANDMARKS = 1, DEPTH_KEEP_STEREO = 0;')
     s = replace(s, '    fsSettings.release();\n}', '''    DEPTH_TOPIC.clear();
     if (!fsSettings["depth_topic"].empty()) fsSettings["depth_topic"] >> DEPTH_TOPIC;
     if (!fsSettings["depth_weight"].empty()) DEPTH_WEIGHT = fsSettings["depth_weight"];
@@ -54,6 +55,8 @@ def apply(repo):
     if (!fsSettings["depth_init_landmarks"].empty()) DEPTH_INIT_LANDMARKS = fsSettings["depth_init_landmarks"];
     if (!fsSettings["depth_start_delay"].empty()) DEPTH_START_DELAY = fsSettings["depth_start_delay"];
     if (!fsSettings["depth_gate"].empty()) DEPTH_GATE = fsSettings["depth_gate"];
+    if (!fsSettings["depth_start_dist"].empty()) DEPTH_START_DIST = fsSettings["depth_start_dist"];
+    if (!fsSettings["depth_keep_stereo"].empty()) DEPTH_KEEP_STEREO = fsSettings["depth_keep_stereo"];
     if (!DEPTH_TOPIC.empty())
         ROS_INFO("LIVE_DEPTH topic=%s weight=%.3f period=%.3fs wait=%.1fms rel_range=%.3f init=%d", DEPTH_TOPIC.c_str(),
                  DEPTH_WEIGHT, DEPTH_PERIOD, DEPTH_WAIT_MS, DEPTH_MAX_REL_RANGE, DEPTH_INIT_LANDMARKS);
@@ -86,7 +89,7 @@ def apply(repo):
     p = src / 'estimator' / 'estimator.h'; s = p.read_text()
     s = replace(s, '#include "parameters.h"', '#include "parameters.h"\n#include "../factor/igev_depth_factor.h"\n'
                 '#include "../factor/depth_topic_provider.h"')
-    s = replace(s, '    FeatureTracker featureTracker;', '    FeatureTracker featureTracker;\n    DepthTopicProvider depth;')
+    s = replace(s, '    FeatureTracker featureTracker;', '    FeatureTracker featureTracker;\n    DepthTopicProvider depth;\n    Eigen::Vector3d depth_origin = Eigen::Vector3d::Zero();\n    bool depth_origin_set = false, depth_motion_ready = false;')
     p.write_text(s)
 
     s = est.read_text()
@@ -97,7 +100,12 @@ def apply(repo):
         throw std::runtime_error("live depth factors require fixed extrinsics and td=0");
     td = TD;''')
     s = replace(s, '    Headers[frame_count] = header;', '''    Headers[frame_count] = header;
-    if (depth.enabled && depth.load(header, solver_flag == NON_LINEAR)) {
+    // Depth starts only after the initialised estimator has moved DEPTH_START_DIST metres (take-off guard).
+    if (solver_flag != NON_LINEAR) depth_motion_ready = false, depth_origin_set = false;
+    else if (!depth_origin_set) depth_origin = Ps[frame_count], depth_origin_set = true;
+    if (depth_origin_set && !depth_motion_ready && (Ps[frame_count] - depth_origin).norm() >= DEPTH_START_DIST)
+        depth_motion_ready = true;
+    if (depth.enabled && depth.load(header, solver_flag == NON_LINEAR && depth_motion_ready)) {
         int accepted = 0;
         for (auto &feature : f_manager.feature) {
             int k = frame_count - feature.start_frame;
@@ -109,7 +117,7 @@ def apply(repo):
                 observation.igev_inverse_depth = 0.;
         }
         ROS_INFO("LIVE_DEPTH_OBS t=%.9f accepted=%d received=%lld used=%lld missed=%lld", header, accepted,
-                 depth.received, depth.used, depth.missed);
+                 depth.received.load(), depth.used, depth.missed);
     }''')
     prefix, rest = s.split('void Estimator::optimization()', 1)
     body, suffix = rest.split('void Estimator::slideWindow()', 1)
@@ -144,7 +152,7 @@ def apply(repo):
                 }
             }
             // Replace the correlated right-camera factor only where depth is accepted.
-            if(STEREO && it_per_frame.is_stereo && !it_per_frame.igev_active)
+            if(STEREO && it_per_frame.is_stereo && (DEPTH_KEEP_STEREO || !it_per_frame.igev_active))
             {''')
     body = replace(body, '    ROS_DEBUG("visual measurement count: %d", f_m_cnt);',
                    '    ROS_DEBUG("visual measurement count: %d", f_m_cnt);\n'
@@ -162,7 +170,7 @@ def apply(repo):
                                 loss_function, vector<double *>{para_Pose[imu_i], para_Pose[imu_j], para_Ex_Pose[0], para_Feature[feature_index]},
                                 vector<int>{0, 3}));
                     }
-                    if(STEREO && it_per_frame.is_stereo && !it_per_frame.igev_active)
+                    if(STEREO && it_per_frame.is_stereo && (DEPTH_KEEP_STEREO || !it_per_frame.igev_active))
                     {''')
     est.write_text(prefix + 'void Estimator::optimization()' + body + 'void Estimator::slideWindow()' + suffix)
 
@@ -170,9 +178,13 @@ def apply(repo):
     p = src / 'rosNodeTest.cpp'; s = p.read_text()
     s = replace(s, 'void imu_callback(', '''void depth_callback(const sensor_msgs::msg::Image::SharedPtr msg)
 {
-    if (msg->encoding != "32FC2") { ROS_WARN("depth topic must be 32FC2, got %s", msg->encoding.c_str()); return; }
+    if (msg->encoding != "32FC2" || msg->is_bigendian) {
+        ROS_WARN("depth topic must be little-endian 32FC2");
+        return;
+    }
     const long long stamp = (long long)msg->header.stamp.sec * 1000000000LL + msg->header.stamp.nanosec;
-    estimator.depth.push(stamp, msg->width, msg->height, msg->data.data(), msg->step);
+    if (!estimator.depth.push(stamp, msg->width, msg->height, msg->data.data(), msg->step, msg->data.size()))
+        ROS_WARN("invalid depth image dimensions, stride or payload size");
 }
 
 void imu_callback(''')

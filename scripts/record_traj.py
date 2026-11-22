@@ -5,6 +5,7 @@ Supports geometry_msgs/PoseWithCovarianceStamped (OpenVINS poseimu) and nav_msgs
 Usage: record_traj.py <out.txt> [topic=/ov_msckf/poseimu] [type=pose|odom]
 """
 import sys
+import time
 
 import rclpy
 from geometry_msgs.msg import PoseWithCovarianceStamped
@@ -18,6 +19,7 @@ class Rec(Node):
         super().__init__("traj_recorder")
         self.f = open(path, "w")
         self.f.write("# timestamp(s) tx ty tz qx qy qz qw\n")
+        self.recv = open(path + ".recv", "w")  # sidecar: header stamp, wall-clock receive time (latency check)
         self.n = 0
         qos = QoSProfile(depth=1000, reliability=ReliabilityPolicy.RELIABLE)
         msg_t = Odometry if kind == "odom" else PoseWithCovarianceStamped
@@ -26,10 +28,12 @@ class Rec(Node):
     def cb(self, m):
         p, q, h = m.pose.pose.position, m.pose.pose.orientation, m.header.stamp
         self.f.write(f"{h.sec + h.nanosec * 1e-9:.9f} {p.x:.9f} {p.y:.9f} {p.z:.9f} {q.x:.9f} {q.y:.9f} {q.z:.9f} {q.w:.9f}\n")
+        self.recv.write(f"{h.sec + h.nanosec * 1e-9:.9f} {time.time():.6f}\n")
         self.n += 1
 
     def close(self):
         self.f.close()
+        self.recv.close()
         print(f"recorded {self.n} poses")
 
 

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="740" viewBox="0 0 1160 740" role="img" aria-labelledby="title description">
+  <title id="title">Kiến trúc RT-IGEV tích hợp vào VINS-Fusion</title>
+  <desc id="description">Cặp ảnh stereo đi vào bộ theo dõi VINS và RT-IGEV. Độ sâu được ghép theo timestamp cam0, kiểm tra tại các điểm đặc trưng, rồi đưa vào bộ tối ưu cùng các ràng buộc ảnh và IMU.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#52647c"/>
+    </marker>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #182a43; }
+      .title { font-size: 34px; font-weight: 700; }
+      .subtitle { font-size: 17px; fill: #506078; }
+      .head { font-size: 20px; font-weight: 700; }
+      .body { font-size: 16px; fill: #344960; }
+      .small { font-size: 14px; fill: #40546c; }
+      .arrow { fill: none; stroke: #52647c; stroke-width: 2.15; marker-end: url(#arrow); }
+      .branch { fill: none; stroke: #52647c; stroke-width: 2.15; }
+      .sensor { fill: #edf2f8; stroke: #a6b5c6; }
+      .vision { fill: #e9f2ff; stroke: #6795d5; }
+      .depth { fill: #e5f7f3; stroke: #4f9f91; }
+      .fusion { fill: #f2edfc; stroke: #9879c3; }
+    </style>
+  </defs>
+  <rect width="1160" height="740" fill="#fbfcfe"/>
+  <text x="48" y="53" class="title">Kiến trúc RT-IGEV tích hợp vào VINS-Fusion</text>
+  <text x="49" y="81" class="subtitle">ROS 2 Humble · Stereo + IMU · Tích hợp độ sâu vào bộ tối ưu cửa sổ trượt</text>
+
+  <path class="branch" d="M580 158 V177"/>
+  <path class="arrow" d="M580 177 H265 V206"/>
+  <path class="arrow" d="M580 177 H835 V206"/>
+  <path class="arrow" d="M265 298 V367"/>
+  <path class="branch" d="M835 316 V330"/>
+  <path class="arrow" d="M835 351 V367"/>
+  <path class="arrow" d="M468 413 H622"/>
+  <path class="arrow" d="M265 459 V541"/>
+  <path class="arrow" d="M835 482 V515 H690 V541"/>
+  <path class="arrow" d="M1080 131 H1120 V588 H910"/>
+  <path class="arrow" d="M580 635 V672"/>
+
+  <rect x="365" y="104" width="430" height="54" rx="12" class="sensor"/>
+  <text x="580" y="137" text-anchor="middle" class="head">Cặp ảnh stereo thô · cam0 và cam1</text>
+  <rect x="925" y="104" width="155" height="54" rx="12" class="sensor"/>
+  <text x="1002" y="137" text-anchor="middle" class="head">IMU · /imu0</text>
+
+  <rect x="62" y="206" width="406" height="92" rx="12" class="vision"/>
+  <text x="84" y="239" class="head">Theo dõi đặc trưng VINS-Fusion</text>
+  <text x="84" y="266" class="body">Track cam0 theo thời gian và ghép điểm cam1.</text>
+  <text x="84" y="288" class="small">Đầu ra gồm ID, pixel cam0 thô, tia và điểm stereo.</text>
+
+  <rect x="622" y="206" width="426" height="110" rx="12" class="depth"/>
+  <text x="644" y="238" class="head">Node RT-IGEV · GPU</text>
+  <text x="644" y="264" class="body">Ghép timestamp → chỉnh lưu → disparity</text>
+  <text x="644" y="289" class="body">6 vòng GRU · CUDA Graph · đổi [ρ, σρ] về cam0 thô</text>
+  <text x="835" y="345" text-anchor="middle" class="small">/depth/inverse_depth · 32FC2 · timestamp cam0</text>
+
+  <rect x="62" y="367" width="406" height="92" rx="12" class="vision"/>
+  <text x="84" y="400" class="head">Quan sát trong cửa sổ trượt</text>
+  <text x="84" y="427" class="body">Duy trì landmark, neo và các quan sát cam0.</text>
+  <text x="84" y="448" class="small">Tạo ràng buộc tái chiếu khi có quan sát phù hợp.</text>
+  <text x="545" y="401" text-anchor="middle" class="small">pixel (u, v), t</text>
+
+  <rect x="622" y="367" width="426" height="115" rx="12" class="depth"/>
+  <text x="644" y="400" class="head">Ghép depth với từng quan sát</text>
+  <text x="644" y="426" class="body">Ghép t trong ±1 µs · kiểm tra vùng 3 × 3</text>
+  <text x="644" y="451" class="body">Tạo depth factor nếu sai lệch tương đối &lt; 10%.</text>
+  <text x="644" y="472" class="small">Khi phép đo bị loại, dùng tái chiếu cam1 nếu có.</text>
+
+  <text x="1107" y="533" class="small" transform="rotate(-90 1107 533)">tiền tích phân IMU</text>
+  <rect x="250" y="541" width="660" height="94" rx="12" class="fusion"/>
+  <text x="580" y="572" text-anchor="middle" class="head">Tối ưu phi tuyến Ceres</text>
+  <text x="580" y="598" text-anchor="middle" class="body">Prior + IMU + tái chiếu cam0 + (depth hoặc tái chiếu cam1)</text>
+  <text x="580" y="621" text-anchor="middle" class="small">Marginalization chuyển thông tin đo đã dùng vào prior của cửa sổ sau.</text>
+
+  <rect x="410" y="672" width="340" height="45" rx="12" class="sensor"/>
+  <text x="580" y="701" text-anchor="middle" class="head">/odometry · quỹ đạo VIO</text>
+</svg>

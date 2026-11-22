@@ -47,8 +47,8 @@ body_T_cam1: !!opencv-matrix
 multiple_thread: 1
 
 #feature traker paprameters
-max_cnt: 150            # max feature number in feature tracking
-min_dist: 30            # min distance between two features 
+max_cnt: 200            # max feature number in feature tracking (upstream 150; 200 measured better with depth)
+min_dist: 25            # min distance between two features (upstream 30)
 freq: 10                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image 
 F_threshold: 1.0        # ransac threshold (pixel)
 show_track: 0
@@ -79,9 +79,11 @@ save_image: 0
 # Remove depth_topic to get the unmodified VINS-Fusion behaviour.
 depth_topic: "/depth/inverse_depth"
 depth_weight: 16          # information multiplier on the depth proxy sigma (sigma / 4)
-depth_period: 1.0         # seconds between backend frames that receive depth factors
+depth_period: 0.2         # seconds between backend frames that receive depth factors (5 Hz)
 depth_wait_ms: 80         # max backend wait for the depth of a selected frame
 depth_max_rel_range: 0.08 # 3x3 smoothness gate (rejects depth discontinuities)
 depth_init_landmarks: 1   # initialise non-stereo landmarks from learned depth
-depth_start_delay: 3.0    # seconds after initialisation before depth factors are used
+depth_start_dist: 0.5     # depth only after the initialised estimator has moved this far (take-off guard)
+depth_start_delay: 1.0    # ... and then this many seconds more
 depth_gate: 0.1           # skip a depth factor if it disagrees >10% with the current estimate
+depth_keep_stereo: 0      # 1 = keep the right-camera factor next to depth (measured worse)

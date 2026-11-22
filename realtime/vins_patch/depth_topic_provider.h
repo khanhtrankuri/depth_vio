@@ -5,11 +5,14 @@
 // from (|dt| <= 1 us); it is never propagated to another frame.
 #pragma once
 #include <algorithm>
+#include <atomic>
 #include <chrono>
 #include <cmath>
 #include <condition_variable>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
+#include <limits>
 #include <map>
 #include <memory>
 #include <mutex>
@@ -27,7 +30,8 @@ public:
     double wait_s = 0.08;       // how long the backend may wait for the depth of a selected frame
     double sigma_scale = 1.0;   // 1/sqrt(information weight)
     double max_rel_range = 0.08;// local smoothness gate (3x3 inverse-depth range / mean)
-    long long received = 0, used = 0, missed = 0;
+    std::atomic<long long> received{0};  // written by the ROS thread, read by the estimator
+    long long used = 0, missed = 0;
 
     void configure(bool on, double weight, double period, double wait_ms, double rel_range) {
         enabled = on;
@@ -38,11 +42,20 @@ public:
     }
 
     // Called from the ROS subscription thread.
-    void push(long long stamp_ns, uint32_t w, uint32_t h, const uint8_t *data, size_t step) {
+    bool push(long long stamp_ns, uint32_t w, uint32_t h, const uint8_t *data, size_t step, size_t size) {
+        constexpr size_t pixel_bytes = 2 * sizeof(float);
+        constexpr auto max_dimension = static_cast<uint32_t>(std::numeric_limits<int>::max());
+        if (!data || w == 0 || h == 0 || w > std::numeric_limits<size_t>::max() / pixel_bytes ||
+            w > max_dimension || h > max_dimension)
+            return false;
+        const size_t row_bytes = size_t(w) * pixel_bytes;
+        if (step < row_bytes || h > size / step)
+            return false;
+
         auto f = std::make_shared<Frame>();
         f->width = w; f->height = h; f->pixels.resize(size_t(w) * h * 2);
         for (uint32_t y = 0; y < h; ++y)
-            std::memcpy(&f->pixels[size_t(y) * w * 2], data + size_t(y) * step, size_t(w) * 2 * sizeof(float));
+            std::memcpy(&f->pixels[size_t(y) * w * 2], data + size_t(y) * step, row_bytes);
         {
             std::lock_guard<std::mutex> lock(m_);
             frames_[stamp_ns] = f;
@@ -50,6 +63,7 @@ public:
             while (frames_.size() > 64) frames_.erase(frames_.begin());
         }
         cv_.notify_all();
+        return true;
     }
 
     double start_delay_s = 0.0; // depth factors only after the estimator has been non-linear this long
